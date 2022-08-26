@@ -6,11 +6,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderModule } from './components/header/header.module';
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent, HeaderComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -19,6 +18,7 @@ import { HeaderComponent } from './components/header/header.component';
       maxAge: 25,
       logOnly: environment.production,
     }),
+    HeaderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

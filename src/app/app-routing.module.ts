@@ -3,10 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { BoardsComponent } from './pages/boards/boards.component';
 import { LandingComponent } from './pages/landing/landing.component';
 
-const routes: Routes = [
+let routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
+    redirectTo: '/landing',
+  },
+  {
+    path: 'landing',
     component: LandingComponent,
   },
   {
