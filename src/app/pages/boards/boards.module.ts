@@ -5,9 +5,10 @@ import { StoreModule } from '@ngrx/store';
 import { BoardComponent } from './components/board/board.component';
 import { BoardEffects } from './store/boards.effects';
 import { reducer } from './store/boards.reducer';
+import { BoardsComponent } from './boards.component';
 
 @NgModule({
-  declarations: [BoardComponent],
+  declarations: [BoardComponent, BoardsComponent],
   imports: [
     CommonModule,
     StoreModule.forRoot({ board: reducer }),
