@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { BoardsState } from '../interfaces/boards-state';
 import { adapter } from './boards.reducer';
 
-export const getBoardsState = createFeatureSelector<BoardsState>('board');
+export const getBoardsState = createFeatureSelector<BoardsState>('boards');
 
 export const selectBoardsState = createSelector(
   getBoardsState,

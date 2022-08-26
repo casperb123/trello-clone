@@ -37,7 +37,7 @@ export const reducer = createReducer(
     loadingFailed: true,
     error: action.error,
   })),
-  on(actions.saveBoards, (state, action) => ({
+  on(actions.saveBoards, (state) => ({
     ...state,
     saving: true,
     saved: false,
