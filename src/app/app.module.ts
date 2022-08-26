@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from './components/header/header.module';
+import { LandingModule } from './pages/landing/landing.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { HeaderModule } from './components/header/header.module';
       logOnly: environment.production,
     }),
     HeaderModule,
+    LandingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
