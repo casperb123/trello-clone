@@ -1,7 +1,7 @@
 import { createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { Board } from '../interfaces/board';
-import { BoardsState } from '../interfaces/boards-state';
+import { Board } from 'src/app/pages/board/board.interface';
+import { BoardsState } from 'src/app/stores/boards/boards-state.interface';
 import * as actions from './boards.actions';
 
 export const adapter = createEntityAdapter<Board>();

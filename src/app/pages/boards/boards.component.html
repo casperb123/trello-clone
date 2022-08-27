@@ -1,1 +1,10 @@
-<p>boards works!</p>
+<h1>Your Boards</h1>
+<ul class="board-list">
+  <li *ngFor="let board of boards$ | async" class="board-item">
+    <a [routerLink]="[board.id]">
+      <mat-card>
+        <mat-card-title>{{ board.title }}</mat-card-title>
+      </mat-card>
+    </a>
+  </li>
+</ul>

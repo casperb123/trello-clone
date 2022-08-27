@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Board } from '../interfaces/board';
-import { BoardsState } from '../interfaces/boards-state';
+import { Board } from 'src/app/pages/board/board.interface';
+import { BoardsState } from './boards-state.interface';
 import * as actions from './boards.actions';
 import * as selectors from './boards.selectors';
 

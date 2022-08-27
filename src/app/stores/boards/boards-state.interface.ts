@@ -1,5 +1,5 @@
 import { EntityState } from '@ngrx/entity';
-import { Board } from './board';
+import { Board } from 'src/app/pages/board/board.interface';
 
 export interface BoardsState extends EntityState<Board> {
   loading: boolean;
