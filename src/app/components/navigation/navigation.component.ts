@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginDialogComponent } from 'src/app/pages/authentication/components/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-navigation',
@@ -6,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
-  public activeLink: string;
+  constructor(private dialog: MatDialog) {}
 
-  constructor() {}
+  public openLoginDialog(): void {
+    this.dialog.open(LoginDialogComponent, {
+      width: '300px',
+    });
+  }
 
   ngOnInit(): void {}
 }

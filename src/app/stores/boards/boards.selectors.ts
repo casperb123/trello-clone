@@ -1,18 +1,25 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { BoardsState } from './boards-state.interface';
-import { adapter } from './boards.reducer';
+import * as reducer from './boards.reducer';
 
-export const getBoardsState = createFeatureSelector<BoardsState>('boards');
+export const selectFeatureState =
+  createFeatureSelector<reducer.State>('boards');
 
 export const selectBoardsState = createSelector(
-  getBoardsState,
+  selectFeatureState,
   (state) => state
 );
 
 export const { selectAll, selectEntities, selectIds, selectTotal } =
-  adapter.getSelectors(selectBoardsState);
+  reducer.adapter.getSelectors(selectBoardsState);
 
-export const selectBoards = createSelector(selectAll, (boards) => boards);
+export const getAllBoards = createSelector(selectAll, (boards) => boards);
 
-export const selectBoardById = (boardId: string) =>
-  createSelector(selectEntities, (entities) => entities[boardId]!);
+export const getBoardById = (boardId: string) =>
+  createSelector(getAllBoards, (entities) =>
+    entities.find((board) => board.id === boardId)
+  );
+
+export const getLoadingBoardsState = createSelector(
+  selectBoardsState,
+  (state) => state.loading
+);

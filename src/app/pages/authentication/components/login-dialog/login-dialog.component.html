@@ -1,0 +1,36 @@
+<form>
+  <h1 mat-dialog-title>Login</h1>
+  <div mat-dialog-content class="content">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        placeholder="Enter your email"
+        [formControl]="email"
+        required
+      />
+      <mat-error *ngIf="email.invalid">{{
+        getErrorMessage(controlType.Email)
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        placeholder="Enter your password"
+        [formControl]="password"
+        required
+      />
+      <mat-error *ngIf="password.invalid">{{
+        getErrorMessage(controlType.Password)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button type="submit" mat-raised-button color="primary">Login</button>
+    <button type="button" mat-button (click)="openRegisterDialog()">
+      Register
+    </button>
+    <button type="button" mat-button mat-dialog-close>Close</button>
+  </div>
+</form>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BoardComponent } from './pages/board/board.component';
+import { BoardComponent } from './pages/boards/board/board.component';
 import { BoardsComponent } from './pages/boards/boards.component';
 import { LandingComponent } from './pages/landing/landing.component';
 

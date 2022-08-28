@@ -1,62 +1,61 @@
-import { createEntityAdapter } from '@ngrx/entity';
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { Board } from 'src/app/pages/board/board.interface';
-import { BoardsState } from 'src/app/stores/boards/boards-state.interface';
+import { Board } from 'src/app/pages/boards/board/board.interface';
 import * as actions from './boards.actions';
 
-export const adapter = createEntityAdapter<Board>();
+export interface State extends EntityState<Board> {
+  loading: boolean;
+  loaded: boolean;
+  loadingError: boolean;
+  updating: boolean;
+  updated: boolean;
+  updatingError: boolean;
+}
 
-export const initialState: BoardsState = adapter.getInitialState({
-  loading: false,
-  loaded: false,
-  loadingFailed: false,
-  saving: false,
-  saved: false,
-  savingFailed: false,
+export const adapter = createEntityAdapter<Board>({
+  selectId: (board) => board.id,
 });
 
-export const reducer = createReducer(
+export const initialState: State = adapter.getInitialState({
+  loading: false,
+  loaded: false,
+  loadingError: false,
+  updating: false,
+  updated: false,
+  updatingError: false,
+});
+
+export const boardsReducer = createReducer(
   initialState,
-  on(actions.getBoards, (state) => ({
+  on(actions.loadBoards, (state) => ({
     ...state,
     loading: true,
-    loaded: false,
-    loadingFailed: false,
-    error: null,
+    loadingError: false,
   })),
-  on(actions.getBoardsSuccess, (state, action) =>
-    adapter.addMany(action.boards, {
+  on(actions.loadBoardsSuccess, (state, action) =>
+    adapter.setAll(action.boards, {
       ...state,
       loaded: true,
       loading: false,
     })
   ),
-  on(actions.getBoardsError, (state, action) => ({
+  on(actions.loadBoardsError, (state) => ({
     ...state,
     loading: false,
-    loadingFailed: true,
-    error: action.error,
+    loadingError: true,
   })),
-  on(actions.saveBoards, (state) => ({
+  on(actions.createBoard, (state) => ({
     ...state,
     saving: true,
-    saved: false,
     savingFailed: false,
     savingError: null,
   })),
-  on(actions.saveBoardsSuccess, (state) => ({
-    ...state,
-    saved: true,
-    saving: false,
-  })),
-  on(actions.saveBoardsError, (state, action) => ({
-    ...state,
-    saving: false,
-    savingFailed: true,
-    savingError: action.error,
-  })),
-  on(actions.createBoard, (state, action) =>
-    adapter.addOne(action.board, state)
+  on(actions.createBoardSuccess, (state, action) =>
+    adapter.addOne(action.board, {
+      ...state,
+      saving: false,
+      saved: true,
+    })
   ),
   on(actions.updateBoard, (state, action) =>
     adapter.updateOne(action.board, state)

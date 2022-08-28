@@ -1,8 +1,21 @@
 .board-list {
-  list-style: none;
   display: flex;
-}
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
 
-.board-item {
-  cursor: pointer;
+  .board-item {
+    flex: 1 1 250px;
+    max-width: 250px;
+
+    a {
+      padding: 0;
+      width: 100%;
+
+      mat-card {
+        box-shadow: none;
+      }
+    }
+  }
 }
