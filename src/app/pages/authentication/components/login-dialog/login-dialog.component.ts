@@ -12,6 +12,7 @@ import { AuthenticationService } from '../../authentication.service';
 export class LoginDialogComponent implements OnInit {
   public form: FormGroup;
   public controlType = AuthControlType;
+  public isLoading: boolean;
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,

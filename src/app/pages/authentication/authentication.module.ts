@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { AuthenticationEffects } from 'src/app/stores/authentication/authentication.effects';
@@ -22,6 +23,7 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
     StoreModule.forFeature('authentication', authenticationReducer),
     EffectsModule.forFeature([AuthenticationEffects]),
   ],

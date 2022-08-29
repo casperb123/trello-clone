@@ -1,24 +1,34 @@
 <form (ngSubmit)="onSubmit()">
   <h1 mat-dialog-title>Register</h1>
   <div mat-dialog-content class="content" [formGroup]="form">
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput placeholder="Enter your email" formControlName="email" />
-      <mat-error *ngIf="email.invalid">{{
-        authService.getFormValidationError(email, controlType.email)
-      }}</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
-      <input
-        matInput
-        placeholder="Enter your password"
-        formControlName="password"
-      />
-      <mat-error *ngIf="password.invalid">{{
-        authService.getFormValidationError(password, controlType.password)
-      }}</mat-error>
-    </mat-form-field>
+    <mat-progress-bar
+      mode="indeterminate"
+      *ngIf="isLoading; else formFields"
+    ></mat-progress-bar>
+    <ng-template #formFields>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="Enter your email"
+          formControlName="email"
+        />
+        <mat-error *ngIf="email.invalid">{{
+          authService.getFormValidationError(email, controlType.email)
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Enter your password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="password.invalid">{{
+          authService.getFormValidationError(password, controlType.password)
+        }}</mat-error>
+      </mat-form-field>
+    </ng-template>
   </div>
   <div mat-dialog-actions>
     <button

@@ -16,6 +16,7 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public controlType = AuthControlType;
+  public isLoading: boolean;
 
   constructor(
     private dialogRef: MatDialogRef<RegisterDialogComponent>,
@@ -47,6 +48,8 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.isLoading = true;
+
     this.registerSubscription = this.authService
       .register(this.email.value, this.password.value)
       .subscribe({
@@ -56,6 +59,7 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
         error: (error: HttpErrorResponse) => {
           console.log('Register error', error);
         },
+        complete: () => (this.isLoading = false),
       });
   }
 
