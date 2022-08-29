@@ -6,6 +6,6 @@
     <a mat-button routerLink="/boards" routerLinkActive="active-link">Boards</a>
   </section>
   <section>
-    <a mat-button (click)="openLoginDialog()">Login</a>
+    <a mat-button (click)="authService.openDialog(dialogType.login)">Login</a>
   </section>
 </nav>

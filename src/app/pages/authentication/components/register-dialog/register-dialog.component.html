@@ -1,16 +1,11 @@
-<form>
+<form (ngSubmit)="onSubmit()">
   <h1 mat-dialog-title>Register</h1>
-  <div mat-dialog-content class="content">
+  <div mat-dialog-content class="content" [formGroup]="form">
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input
-        matInput
-        placeholder="Enter your email"
-        [formControl]="email"
-        required
-      />
+      <input matInput placeholder="Enter your email" formControlName="email" />
       <mat-error *ngIf="email.invalid">{{
-        getErrorMessage(controlType.Email)
+        authService.getFormValidationError(email, controlType.email)
       }}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
@@ -18,16 +13,22 @@
       <input
         matInput
         placeholder="Enter your password"
-        [formControl]="password"
-        required
+        formControlName="password"
       />
       <mat-error *ngIf="password.invalid">{{
-        getErrorMessage(controlType.Password)
+        authService.getFormValidationError(password, controlType.password)
       }}</mat-error>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button type="submit" mat-raised-button color="primary">Register</button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="!form.valid"
+    >
+      Register
+    </button>
     <button type="button" mat-button (click)="openLoginDialog()">Login</button>
     <button type="button" mat-button mat-dialog-close>Cancel</button>
   </div>

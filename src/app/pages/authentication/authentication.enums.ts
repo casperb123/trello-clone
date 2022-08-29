@@ -1,4 +1,9 @@
 export enum AuthControlType {
-  Email = 'Email',
-  Password = 'Password',
+  email = 'email',
+  password = 'password',
+}
+
+export enum AuthDialogType {
+  'login',
+  'register',
 }
