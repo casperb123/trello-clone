@@ -17,6 +17,7 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public controlType = AuthControlType;
   public isLoading: boolean;
+  public errorMessage: string;
 
   constructor(
     private dialogRef: MatDialogRef<RegisterDialogComponent>,
@@ -26,7 +27,10 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.min(6)]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
@@ -55,11 +59,19 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           console.log('Register response', response);
+          this.isLoading = false;
         },
         error: (error: HttpErrorResponse) => {
-          console.log('Register error', error);
+          switch (error.error.error.message) {
+            case 'EMAIL_EXISTS':
+              this.errorMessage = 'Email is already registered!';
+              break;
+            default:
+              this.errorMessage = 'An error occurred!';
+              break;
+          }
+          this.isLoading = false;
         },
-        complete: () => (this.isLoading = false),
       });
   }
 
