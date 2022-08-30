@@ -1,6 +1,7 @@
 .content {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 
   .error-message {
     padding: 0 0 10px 5px;

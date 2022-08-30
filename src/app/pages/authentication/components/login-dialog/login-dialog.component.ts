@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthControlType, AuthDialogType } from '../../authentication.enums';
 import { AuthenticationService } from '../../authentication.service';
@@ -15,6 +20,16 @@ export class LoginDialogComponent implements OnInit {
   public isLoading: boolean;
   public errorMessage: string;
 
+  public get email(): AbstractControl {
+    return this.form.get('email');
+  }
+  public get password(): AbstractControl {
+    return this.form.get('password');
+  }
+  public get rememberMe(): AbstractControl {
+    return this.form.get('rememberMe');
+  }
+
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
     public authService: AuthenticationService
@@ -27,15 +42,8 @@ export class LoginDialogComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
       ]),
+      rememberMe: new FormControl(false),
     });
-  }
-
-  public get email() {
-    return this.form.get('email');
-  }
-
-  public get password() {
-    return this.form.get('password');
   }
 
   public openRegisterDialog(): void {
@@ -43,7 +51,7 @@ export class LoginDialogComponent implements OnInit {
     this.authService.openDialog(AuthDialogType.register);
   }
 
-  public onSubmit(form: NgForm): void {
-    console.log(form.value);
+  public onSubmit(): void {
+    console.log(this.form.value);
   }
 }

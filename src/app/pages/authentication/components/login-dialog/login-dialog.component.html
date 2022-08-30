@@ -1,6 +1,6 @@
-<form (ngSubmit)="onSubmit(form.value)">
+<form (ngSubmit)="onSubmit()">
   <h1 mat-dialog-title>Log in</h1>
-  <div mat-dialog-content class="content" [formGroup]="form">
+  <div class="content" [formGroup]="form">
     <mat-progress-bar
       mode="indeterminate"
       *ngIf="isLoading; else formFields"
@@ -32,6 +32,7 @@
           authService.getFormValidationError(password, controlType.password)
         }}</mat-error>
       </mat-form-field>
+      <mat-checkbox formControlName="rememberMe">Remember Me</mat-checkbox>
     </ng-template>
   </div>
   <div mat-dialog-actions>

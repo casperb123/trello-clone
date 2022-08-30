@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AuthControlType, AuthDialogType } from '../../authentication.enums';
@@ -19,6 +24,14 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   public errorMessage: string;
 
+  public get email(): AbstractControl {
+    return this.form.get('email');
+  }
+
+  public get password(): AbstractControl {
+    return this.form.get('password');
+  }
+
   constructor(
     private dialogRef: MatDialogRef<RegisterDialogComponent>,
     public authService: AuthenticationService
@@ -32,14 +45,6 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
         Validators.minLength(6),
       ]),
     });
-  }
-
-  public get email() {
-    return this.form.get('email');
-  }
-
-  public get password() {
-    return this.form.get('password');
   }
 
   public openLoginDialog(): void {
