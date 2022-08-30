@@ -4,11 +4,8 @@ import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import {
-  AuthControlType,
-  AuthDialogType,
-} from 'src/app/pages/authentication/authentication.enums';
-import { AuthRegisterResponse } from 'src/app/pages/authentication/authentication.interfaces';
+import { AuthControlType, AuthDialogType } from './authentication.enums';
+import { AuthRegisterResponse } from './authentication.interfaces';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 
