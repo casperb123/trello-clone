@@ -6,6 +6,10 @@
       *ngIf="isLoading; else formFields"
     ></mat-progress-bar>
     <ng-template #formFields>
+      <mat-error class="error-message" *ngIf="errorMessage">{{
+        errorMessage
+      }}</mat-error>
+
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input

@@ -53,6 +53,7 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
     }
 
     this.isLoading = true;
+    this.errorMessage = null;
 
     this.registerSubscription = this.authService
       .register(this.email.value, this.password.value)

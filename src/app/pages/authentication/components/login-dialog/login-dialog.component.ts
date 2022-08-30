@@ -13,6 +13,7 @@ export class LoginDialogComponent implements OnInit {
   public form: FormGroup;
   public controlType = AuthControlType;
   public isLoading: boolean;
+  public errorMessage: string;
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
