@@ -10,7 +10,7 @@
       {{ (isLoggedIn$ | async).email }}
     </button>
     <mat-menu #logoutMenu>
-      <button mat-menu-item (click)="logout()">Logout</button>
+      <button type="button" mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
   </section>
   <ng-template #login>
