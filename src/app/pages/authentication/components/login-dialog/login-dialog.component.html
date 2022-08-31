@@ -3,11 +3,11 @@
   <div class="content" [formGroup]="form">
     <mat-progress-bar
       mode="indeterminate"
-      *ngIf="isLoading; else formFields"
+      *ngIf="isLoggingIn$ | async; else formFields"
     ></mat-progress-bar>
     <ng-template #formFields>
-      <mat-error class="error-message" *ngIf="errorMessage">{{
-        errorMessage
+      <mat-error class="error-message" *ngIf="loginError$ | async">{{
+        loginError$ | async
       }}</mat-error>
 
       <mat-form-field appearance="fill">

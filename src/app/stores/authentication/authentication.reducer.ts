@@ -4,7 +4,7 @@ import * as actions from './authentication.actions';
 export interface State {
   loggingIn: boolean;
   loggedIn: boolean;
-  loginError: any;
+  loginError: string;
 }
 
 export const initialState: State = {
@@ -29,5 +29,11 @@ export const authenticationReducer = createReducer(
     ...state,
     loggingIn: false,
     loginError: action.error,
+  })),
+  on(actions.logout, (state) => ({
+    ...state,
+    loggedIn: false,
+    loggingIn: false,
+    loginError: null,
   }))
 );

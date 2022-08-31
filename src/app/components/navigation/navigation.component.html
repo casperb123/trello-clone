@@ -5,10 +5,15 @@
     >
     <a mat-button routerLink="/boards" routerLinkActive="active-link">Boards</a>
   </section>
-  <section>
-    <a mat-button (click)="authService.openDialog(dialogType.login)">Login</a>
-    <a mat-button (click)="authService.openDialog(dialogType.register)"
-      >Register</a
-    >
+  <section *ngIf="isLoggedIn$ | async; else login">
+    <a mat-button (click)="logout()">Logout</a>
   </section>
+  <ng-template #login>
+    <section>
+      <a mat-button (click)="authService.openDialog(dialogType.login)">Login</a>
+      <a mat-button (click)="authService.openDialog(dialogType.register)"
+        >Register</a
+      >
+    </section>
+  </ng-template>
 </nav>

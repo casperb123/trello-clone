@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { filter, Observable, Subscription, tap } from 'rxjs';
 import { AuthControlType, AuthDialogType } from '../../authentication.enums';
 import { AuthenticationService } from '../../authentication.service';
 
@@ -14,11 +15,14 @@ import { AuthenticationService } from '../../authentication.service';
   templateUrl: './login-dialog.component.html',
   styleUrls: ['./login-dialog.component.scss'],
 })
-export class LoginDialogComponent implements OnInit {
+export class LoginDialogComponent implements OnInit, OnDestroy {
+  private loggedInSub: Subscription;
+
   public form: FormGroup;
   public controlType = AuthControlType;
-  public isLoading: boolean;
-  public errorMessage: string;
+  public isLoggingIn$: Observable<boolean>;
+  public isLoggedIn$: Observable<boolean>;
+  public loginError$: Observable<string>;
 
   public get email(): AbstractControl {
     return this.form.get('email');
@@ -44,6 +48,20 @@ export class LoginDialogComponent implements OnInit {
       ]),
       rememberMe: new FormControl(false),
     });
+
+    this.isLoggingIn$ = this.authService.getIsLoggingIn().pipe(
+      tap((isLoggingIn) => {
+        this.dialogRef.disableClose = isLoggingIn;
+      })
+    );
+    this.loginError$ = this.authService.getLoginError();
+
+    this.loggedInSub = this.authService
+      .getIsLoggedIn()
+      .pipe(filter((isLoggedIn) => isLoggedIn))
+      .subscribe(() => {
+        this.dialogRef.close();
+      });
   }
 
   public openRegisterDialog(): void {
@@ -52,6 +70,16 @@ export class LoginDialogComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    console.log(this.form.value);
+    if (!this.form.valid) {
+      return;
+    }
+
+    this.authService.login(this.email.value, this.password.value);
+  }
+
+  ngOnDestroy(): void {
+    if (this.loggedInSub) {
+      this.loggedInSub.unsubscribe();
+    }
   }
 }

@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -67,15 +66,8 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
           console.log('Register response', response);
           this.isLoading = false;
         },
-        error: (error: HttpErrorResponse) => {
-          switch (error.error.error.message) {
-            case 'EMAIL_EXISTS':
-              this.errorMessage = 'Email is already registered!';
-              break;
-            default:
-              this.errorMessage = 'An error occurred!';
-              break;
-          }
+        error: (error: Error) => {
+          this.errorMessage = error.message;
           this.isLoading = false;
         },
       });
