@@ -82,8 +82,8 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
           next: (response) => {
             this.authService.login(response.email, this.password.value);
           },
-          error: (error: Error) => {
-            this.errorMessage = error.message;
+          error: (error: string) => {
+            this.errorMessage = error;
             this.isLoading = false;
           },
         })

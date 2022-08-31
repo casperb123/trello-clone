@@ -17,7 +17,7 @@
           placeholder="Enter your email"
           formControlName="email"
         />
-        <mat-error *ngIf="email.invalid">{{
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">{{
           authService.getFormValidationError(email, controlType.email)
         }}</mat-error>
       </mat-form-field>
@@ -28,9 +28,12 @@
           placeholder="Enter your password"
           formControlName="password"
         />
-        <mat-error *ngIf="password.invalid">{{
-          authService.getFormValidationError(password, controlType.password)
-        }}</mat-error>
+        <mat-error
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+          >{{
+            authService.getFormValidationError(password, controlType.password)
+          }}</mat-error
+        >
       </mat-form-field>
       <mat-checkbox formControlName="rememberMe">Remember Me</mat-checkbox>
     </ng-template>
