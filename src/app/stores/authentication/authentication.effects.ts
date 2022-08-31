@@ -30,15 +30,12 @@ export class AuthenticationEffects {
           )
           .pipe(
             map((response) => {
-              const expirationDate: Date = new Date(
-                new Date().getTime() + +response.expiresIn * 1000
-              );
               return actions.loginSuccess({
                 user: new User(
                   response.email,
                   response.localId,
                   response.idToken,
-                  expirationDate
+                  this.authService.handleExpireDate(response.expiresIn)
                 ),
               });
             }),

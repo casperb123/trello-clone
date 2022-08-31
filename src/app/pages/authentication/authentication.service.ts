@@ -70,6 +70,13 @@ export class AuthenticationService {
     return errorMessage;
   }
 
+  public handleExpireDate(expiresIn: string): Date {
+    const expirationDate: Date = new Date(
+      new Date().getTime() + +expiresIn * 1000
+    );
+    return expirationDate;
+  }
+
   public register(email: string, password: string): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(
@@ -89,6 +96,17 @@ export class AuthenticationService {
 
   public login(email: string, password: string): void {
     this.authFacade.login(email, password);
+  }
+
+  public registerLogin(
+    email: string,
+    id: string,
+    token: string,
+    tokenExpiration: string
+  ): void {
+    this.authFacade.registerLogin(
+      new User(email, id, token, this.handleExpireDate(tokenExpiration))
+    );
   }
 
   public logout(): void {

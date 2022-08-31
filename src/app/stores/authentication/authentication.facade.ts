@@ -14,6 +14,10 @@ export class AuthenticationFacade {
     this.store$.dispatch(actions.login({ email: email, password: password }));
   }
 
+  public registerLogin(user: User): void {
+    this.store$.dispatch(actions.loginSuccess({ user: user }));
+  }
+
   public logout(): void {
     this.store$.dispatch(actions.logout());
   }

@@ -80,7 +80,12 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
         .register(this.email.value, this.password.value)
         .subscribe({
           next: (response) => {
-            this.authService.login(response.email, this.password.value);
+            this.authService.registerLogin(
+              response.email,
+              response.localId,
+              response.idToken,
+              response.expiresIn
+            );
           },
           error: (error: string) => {
             this.errorMessage = error;
