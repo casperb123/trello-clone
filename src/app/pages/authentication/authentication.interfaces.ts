@@ -6,3 +6,7 @@ export interface AuthResponse {
   localId: string;
   registered?: boolean;
 }
+
+export interface User {
+  email: string;
+}

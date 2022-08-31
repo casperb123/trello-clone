@@ -58,7 +58,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
 
     this.loggedInSub = this.authService
       .getIsLoggedIn()
-      .pipe(filter((isLoggedIn) => isLoggedIn))
+      .pipe(filter((isLoggedIn) => !!isLoggedIn))
       .subscribe(() => {
         this.dialogRef.close();
       });

@@ -1,14 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
+import { User } from 'src/app/pages/authentication/authentication.interfaces';
 import * as actions from './authentication.actions';
 
 export interface State {
   loggingIn: boolean;
-  loggedIn: boolean;
+  loggedIn: User;
   loginError: string;
 }
 
 export const initialState: State = {
-  loggedIn: false,
+  loggedIn: null,
   loggingIn: false,
   loginError: null,
 };
@@ -20,9 +21,11 @@ export const authenticationReducer = createReducer(
     loggingIn: true,
     loginError: null,
   })),
-  on(actions.loginSuccess, (state) => ({
+  on(actions.loginSuccess, (state, action) => ({
     ...state,
-    loggedIn: true,
+    loggedIn: {
+      email: action.response.email,
+    },
     loggingIn: false,
   })),
   on(actions.loginError, (state, action) => ({
@@ -32,7 +35,7 @@ export const authenticationReducer = createReducer(
   })),
   on(actions.logout, (state) => ({
     ...state,
-    loggedIn: false,
+    loggedIn: null,
     loggingIn: false,
     loginError: null,
   }))

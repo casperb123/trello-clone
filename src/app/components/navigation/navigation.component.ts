@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthDialogType } from 'src/app/pages/authentication/authentication.enums';
+import { User } from 'src/app/pages/authentication/authentication.interfaces';
 import { AuthenticationService } from 'src/app/pages/authentication/authentication.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { AuthenticationService } from 'src/app/pages/authentication/authenticati
 })
 export class NavigationComponent implements OnInit {
   public dialogType = AuthDialogType;
-  public isLoggedIn$: Observable<boolean>;
+  public isLoggedIn$: Observable<User>;
 
   constructor(public authService: AuthenticationService) {}
 

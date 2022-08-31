@@ -10,7 +10,7 @@ import {
   AuthDialogType,
   AuthError,
 } from './authentication.enums';
-import { AuthResponse } from './authentication.interfaces';
+import { AuthResponse, User } from './authentication.interfaces';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 
@@ -98,7 +98,7 @@ export class AuthenticationService {
     return this.authFacade.getIsLoggingIn();
   }
 
-  public getIsLoggedIn(): Observable<boolean> {
+  public getIsLoggedIn(): Observable<User> {
     return this.authFacade.getIsLoggedIn();
   }
 
