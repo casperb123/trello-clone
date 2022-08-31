@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { AuthControlType, AuthDialogType } from '../../authentication.enums';
 import { AuthenticationService } from '../../authentication.service';
 
@@ -16,7 +16,7 @@ import { AuthenticationService } from '../../authentication.service';
   styleUrls: ['./register-dialog.component.scss'],
 })
 export class RegisterDialogComponent implements OnInit, OnDestroy {
-  private registerSubscription: Subscription;
+  private subs: Subscription[];
 
   public form: FormGroup;
   public controlType = AuthControlType;
@@ -44,6 +44,22 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
         Validators.minLength(6),
       ]),
     });
+    this.subs = [];
+
+    this.subs.push(
+      this.authService
+        .getUserLoggedIn()
+        .pipe(filter((user) => !!user))
+        .subscribe(() => {
+          this.dialogRef.close();
+        })
+    );
+    this.subs.push(
+      this.authService.getLoginError().subscribe((error) => {
+        this.isLoading = false;
+        this.errorMessage = error;
+      })
+    );
   }
 
   public openLoginDialog(): void {
@@ -59,23 +75,24 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.errorMessage = null;
 
-    this.registerSubscription = this.authService
-      .register(this.email.value, this.password.value)
-      .subscribe({
-        next: (response) => {
-          console.log('Register response', response);
-          this.isLoading = false;
-        },
-        error: (error: Error) => {
-          this.errorMessage = error.message;
-          this.isLoading = false;
-        },
-      });
+    this.subs.push(
+      this.authService
+        .register(this.email.value, this.password.value)
+        .subscribe({
+          next: (response) => {
+            this.authService.login(response.email, this.password.value);
+          },
+          error: (error: Error) => {
+            this.errorMessage = error.message;
+            this.isLoading = false;
+          },
+        })
+    );
   }
 
   ngOnDestroy(): void {
-    if (this.registerSubscription) {
-      this.registerSubscription.unsubscribe();
+    if (this.subs) {
+      this.subs.forEach((sub) => sub.unsubscribe());
     }
   }
 }

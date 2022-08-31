@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { AuthResponse } from 'src/app/pages/authentication/authentication.interfaces';
+import { User } from 'src/app/pages/authentication/authentication.models';
 
 export const login = createAction(
   '[Authentucation] Login',
@@ -8,7 +8,7 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   '[Authentication] Login Success',
-  props<{ response: AuthResponse }>()
+  props<{ user: User }>()
 );
 
 export const loginError = createAction(

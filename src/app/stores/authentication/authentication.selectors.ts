@@ -14,9 +14,9 @@ export const getLoggingInState = createSelector(
   (state) => state.loggingIn
 );
 
-export const getLoggedInState = createSelector(
+export const getUserLoggedInState = createSelector(
   selectAuthenticationState,
-  (state) => state.loggedIn
+  (state) => state.userLoggedIn
 );
 
 export const getLoginError = createSelector(

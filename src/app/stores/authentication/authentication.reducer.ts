@@ -1,15 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/pages/authentication/authentication.interfaces';
+import { User } from 'src/app/pages/authentication/authentication.models';
 import * as actions from './authentication.actions';
 
 export interface State {
   loggingIn: boolean;
-  loggedIn: User;
+  userLoggedIn: User;
   loginError: string;
 }
 
 export const initialState: State = {
-  loggedIn: null,
+  userLoggedIn: null,
   loggingIn: false,
   loginError: null,
 };
@@ -23,9 +23,7 @@ export const authenticationReducer = createReducer(
   })),
   on(actions.loginSuccess, (state, action) => ({
     ...state,
-    loggedIn: {
-      email: action.response.email,
-    },
+    userLoggedIn: action.user,
     loggingIn: false,
   })),
   on(actions.loginError, (state, action) => ({
@@ -35,7 +33,7 @@ export const authenticationReducer = createReducer(
   })),
   on(actions.logout, (state) => ({
     ...state,
-    loggedIn: null,
+    userLoggedIn: null,
     loggingIn: false,
     loginError: null,
   }))

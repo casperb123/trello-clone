@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 import { AuthResponse } from 'src/app/pages/authentication/authentication.interfaces';
+import { User } from 'src/app/pages/authentication/authentication.models';
 import { AuthenticationService } from 'src/app/pages/authentication/authentication.service';
 import * as actions from './authentication.actions';
 
@@ -28,7 +29,19 @@ export class AuthenticationEffects {
             }
           )
           .pipe(
-            map((response) => actions.loginSuccess({ response: response })),
+            map((response) => {
+              const expirationDate: Date = new Date(
+                new Date().getTime() + +response.expiresIn * 1000
+              );
+              return actions.loginSuccess({
+                user: new User(
+                  response.email,
+                  response.localId,
+                  response.idToken,
+                  expirationDate
+                ),
+              });
+            }),
             catchError((errorResponse) =>
               of(
                 actions.loginError({
