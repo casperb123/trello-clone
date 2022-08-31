@@ -15,10 +15,20 @@
   </section>
   <ng-template #login>
     <section>
-      <a mat-button (click)="authService.openDialog(dialogType.login)">Login</a>
-      <a mat-button (click)="authService.openDialog(dialogType.register)"
-        >Register</a
+      <button
+        type="button"
+        mat-button
+        (click)="authService.openDialog(dialogType.login)"
       >
+        Login
+      </button>
+      <button
+        type="button"
+        mat-button
+        (click)="authService.openDialog(dialogType.register)"
+      >
+        Register
+      </button>
     </section>
   </ng-template>
 </nav>
