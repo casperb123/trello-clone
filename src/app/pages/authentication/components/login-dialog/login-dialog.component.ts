@@ -7,7 +7,9 @@ import {
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { filter, Observable, Subscription, tap } from 'rxjs';
-import { AuthControlType, AuthDialogType } from '../../authentication.enums';
+import { DialogType } from 'src/app/app.enums';
+import { AppService } from 'src/app/app.service';
+import { AuthControlType } from '../../authentication.enums';
 import { AuthenticationService } from '../../authentication.service';
 
 @Component({
@@ -36,6 +38,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
+    private appService: AppService,
     public authService: AuthenticationService
   ) {}
 
@@ -66,7 +69,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
 
   public openRegisterDialog(): void {
     this.dialogRef.close();
-    this.authService.openDialog(AuthDialogType.register);
+    this.appService.openDialog(DialogType.Register);
   }
 
   public onSubmit(): void {

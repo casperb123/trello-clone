@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BoardsFacade } from 'src/app/stores/boards/boards.facade';
 import { Board } from './board/board.interface';
+import { BoardsService } from './boards.service';
 
 @Component({
   selector: 'app-boards',
@@ -11,9 +11,9 @@ import { Board } from './board/board.interface';
 export class BoardsComponent implements OnInit {
   public boards$: Observable<Board[]>;
 
-  constructor(private boardsFacade: BoardsFacade) {}
+  constructor(private boardsService: BoardsService) {}
 
   ngOnInit(): void {
-    this.boards$ = this.boardsFacade.getBoards();
+    this.boards$ = this.boardsService.getBoards();
   }
 }

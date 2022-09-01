@@ -34,7 +34,7 @@ export class BoardsFacade {
     this.store$.dispatch(actions.createBoard({ title: title }));
   }
 
-  public deleteBoard(board: Board): void {
-    this.store$.dispatch(actions.deleteBoard({ boardId: board.id }));
+  public deleteBoard(boardId: string): void {
+    this.store$.dispatch(actions.deleteBoard({ boardId: boardId }));
   }
 }

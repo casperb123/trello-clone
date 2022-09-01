@@ -1,19 +1,11 @@
-import { ComponentType } from '@angular/cdk/portal';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthenticationFacade } from 'src/app/stores/authentication/authentication.facade';
-import {
-  AuthControlType,
-  AuthDialogType,
-  AuthError,
-} from './authentication.enums';
+import { AuthControlType, AuthError } from './authentication.enums';
 import { AuthResponse } from './authentication.interfaces';
 import { User } from './authentication.models';
-import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
-import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -21,27 +13,8 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
 export class AuthenticationService {
   constructor(
     private http: HttpClient,
-    private dialog: MatDialog,
     private authFacade: AuthenticationFacade
   ) {}
-
-  public openDialog(dialogType: AuthDialogType): void {
-    let component: ComponentType<any>;
-    switch (dialogType) {
-      case AuthDialogType.login:
-        component = LoginDialogComponent;
-        break;
-      case AuthDialogType.register:
-        component = RegisterDialogComponent;
-        break;
-      default:
-        break;
-    }
-
-    this.dialog.open(component, {
-      width: '450px',
-    });
-  }
 
   public getFormValidationError(
     control: AbstractControl,

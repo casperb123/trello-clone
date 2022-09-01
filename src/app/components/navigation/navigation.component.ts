@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthDialogType } from 'src/app/pages/authentication/authentication.enums';
+import { DialogType } from 'src/app/app.enums';
+import { AppService } from 'src/app/app.service';
 import { User } from 'src/app/pages/authentication/authentication.models';
 import { AuthenticationService } from 'src/app/pages/authentication/authentication.service';
 
@@ -10,10 +11,13 @@ import { AuthenticationService } from 'src/app/pages/authentication/authenticati
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
-  public dialogType = AuthDialogType;
+  public dialogType = DialogType;
   public isLoggedIn$: Observable<User>;
 
-  constructor(public authService: AuthenticationService) {}
+  constructor(
+    public authService: AuthenticationService,
+    public appService: AppService
+  ) {}
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.getUserLoggedIn();

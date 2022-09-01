@@ -9,9 +9,10 @@ import { BoardEffects } from 'src/app/stores/boards/boards.effects';
 import { boardsReducer } from 'src/app/stores/boards/boards.reducer';
 import { BoardModule } from './board/board.module';
 import { BoardsComponent } from './boards.component';
+import { CreateBoardDialogComponent } from './components/create-board-dialog/create-board-dialog.component';
 
 @NgModule({
-  declarations: [BoardsComponent],
+  declarations: [BoardsComponent, CreateBoardDialogComponent],
   imports: [
     CommonModule,
     MatCardModule,
