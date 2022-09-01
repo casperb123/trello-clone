@@ -1,3 +1,3 @@
 export interface CreateBoardResponse {
-  id: string;
+  name: string;
 }

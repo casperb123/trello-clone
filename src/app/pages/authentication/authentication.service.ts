@@ -1,9 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthenticationFacade } from 'src/app/stores/authentication/authentication.facade';
-import { AuthControlType, AuthError } from './authentication.enums';
+import { AuthError } from './authentication.enums';
 import { AuthResponse } from './authentication.interfaces';
 import { User } from './authentication.models';
 
@@ -15,25 +14,6 @@ export class AuthenticationService {
     private http: HttpClient,
     private authFacade: AuthenticationFacade
   ) {}
-
-  public getFormValidationError(
-    control: AbstractControl,
-    controlType: AuthControlType
-  ): string {
-    if (control.hasError('required')) {
-      return `The ${controlType} can't be empty`;
-    }
-
-    if (control.hasError('minlength')) {
-      return `The ${controlType} must be atleast 6 characters`;
-    }
-
-    if (control.hasError('email')) {
-      return 'Not a valid email';
-    }
-
-    return '';
-  }
 
   public handleAuthError(error: HttpErrorResponse): string {
     let errorMessage = 'An unknown error occured!';

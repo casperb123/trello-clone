@@ -1,10 +1,16 @@
 <h1>Your Boards</h1>
+<button
+  type="button"
+  mat-raised-button
+  color="primary"
+  (click)="appService.openDialog(dialogType.CreateBoard)"
+>
+  Create Board
+</button>
 <ul class="board-list">
   <li *ngFor="let board of boards$ | async" class="board-item">
-    <a [routerLink]="[board.id]" mat-raised-button>
-      <mat-card>
-        <mat-card-title>{{ board.title }}</mat-card-title>
-      </mat-card>
+    <a [routerLink]="[board.id]" mat-raised-button color="primary">
+      <mat-card-title>{{ board.title }}</mat-card-title>
     </a>
   </li>
 </ul>

@@ -6,10 +6,12 @@ import * as actions from './boards.actions';
 export interface State extends EntityState<Board> {
   loading: boolean;
   loaded: boolean;
-  loadingError: boolean;
-  updating: boolean;
-  updated: boolean;
-  updatingError: boolean;
+  loadingError: any;
+  create: {
+    loading: boolean;
+    loaded: boolean;
+    loadingError: any;
+  };
 }
 
 export const adapter = createEntityAdapter<Board>({
@@ -19,10 +21,12 @@ export const adapter = createEntityAdapter<Board>({
 export const initialState: State = adapter.getInitialState({
   loading: false,
   loaded: false,
-  loadingError: false,
-  updating: false,
-  updated: false,
-  updatingError: false,
+  loadingError: null,
+  create: {
+    loading: false,
+    loaded: false,
+    loadingError: null,
+  },
 });
 
 export const boardsReducer = createReducer(
@@ -30,7 +34,7 @@ export const boardsReducer = createReducer(
   on(actions.loadBoards, (state) => ({
     ...state,
     loading: true,
-    loadingError: false,
+    loadingError: null,
   })),
   on(actions.loadBoardsSuccess, (state, action) =>
     adapter.setAll(action.boards, {
@@ -39,28 +43,44 @@ export const boardsReducer = createReducer(
       loading: false,
     })
   ),
-  on(actions.loadBoardsError, (state) => ({
+  on(actions.loadBoardsError, (state, action) => ({
     ...state,
     loading: false,
-    loadingError: true,
+    loadingError: action.error,
   })),
   on(actions.createBoard, (state) => ({
     ...state,
-    saving: true,
-    savingFailed: false,
-    savingError: null,
+    create: {
+      ...state.create,
+      loading: true,
+    },
   })),
   on(actions.createBoardSuccess, (state, action) =>
     adapter.addOne(action.board, {
       ...state,
-      saving: false,
-      saved: true,
+      create: {
+        ...state.create,
+        loaded: true,
+        loading: false,
+      },
     })
   ),
+  on(actions.createBoardError, (state, action) => ({
+    ...state,
+    create: {
+      ...state.create,
+      loading: false,
+      loadingError: action.error,
+    },
+  })),
   on(actions.updateBoard, (state, action) =>
     adapter.updateOne(action.board, state)
   ),
   on(actions.deleteBoard, (state, action) =>
     adapter.removeOne(action.boardId, state)
-  )
+  ),
+  on(actions.resetCreateState, (state) => ({
+    ...state,
+    create: initialState.create,
+  }))
 );

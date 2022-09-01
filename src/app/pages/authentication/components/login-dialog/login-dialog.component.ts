@@ -7,9 +7,8 @@ import {
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { filter, Observable, Subscription, tap } from 'rxjs';
-import { DialogType } from 'src/app/app.enums';
+import { ControlType, DialogType } from 'src/app/app.enums';
 import { AppService } from 'src/app/app.service';
-import { AuthControlType } from '../../authentication.enums';
 import { AuthenticationService } from '../../authentication.service';
 
 @Component({
@@ -21,7 +20,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
   private loggedInSub: Subscription;
 
   public form: FormGroup;
-  public controlType = AuthControlType;
+  public controlType = ControlType;
   public isLoggingIn$: Observable<boolean>;
   public isLoggedIn$: Observable<boolean>;
   public loginError$: Observable<string>;
@@ -38,7 +37,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
-    private appService: AppService,
+    public appService: AppService,
     public authService: AuthenticationService
   ) {}
 

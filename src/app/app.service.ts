@@ -1,7 +1,8 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogType } from './app.enums';
+import { ControlType, DialogType } from './app.enums';
 import { LoginDialogComponent } from './pages/authentication/components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from './pages/authentication/components/register-dialog/register-dialog.component';
 import { CreateBoardDialogComponent } from './pages/boards/components/create-board-dialog/create-board-dialog.component';
@@ -27,5 +28,24 @@ export class AppService {
     this.dialog.open(component, {
       width: '450px',
     });
+  }
+
+  public getFormValidationError(
+    control: AbstractControl,
+    controlType: ControlType
+  ): string {
+    if (control.hasError('required')) {
+      return `The ${controlType} can't be empty`;
+    }
+
+    if (control.hasError('minlength')) {
+      return `The ${controlType} must be atleast 6 characters`;
+    }
+
+    if (control.hasError('email')) {
+      return 'Not a valid email';
+    }
+
+    return '';
   }
 }

@@ -11,8 +11,8 @@ import {
 } from 'rxjs';
 import { AuthenticationService } from 'src/app/pages/authentication/authentication.service';
 import { Board } from 'src/app/pages/boards/board/board.interface';
+import { CreateBoardResponse } from 'src/app/pages/boards/boards.interfaces';
 import * as actions from './boards.actions';
-import { CreateBoardResponse } from './interfaces/create-board-response.interface';
 
 @Injectable()
 export class BoardEffects {
@@ -29,9 +29,9 @@ export class BoardEffects {
       exhaustMap((user) =>
         this.http
           .get(
-            'https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/boards.json',
+            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/boards/${user.id}.json`,
             {
-              params: new HttpParams().set('access_token', user.token),
+              params: new HttpParams().set('auth', user.token),
             }
           )
           .pipe(
@@ -47,7 +47,7 @@ export class BoardEffects {
               }
               return actions.loadBoardsSuccess({ boards: boardsArray });
             }),
-            catchError(() => of(actions.loadBoardsError()))
+            catchError((error) => of(actions.loadBoardsError({ error: error })))
           )
       )
     )
@@ -60,19 +60,19 @@ export class BoardEffects {
       exhaustMap(([action, user]) =>
         this.http
           .post<CreateBoardResponse>(
-            'https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/boards.json',
+            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/boards/${user.id}.json`,
             {
               title: action.title,
             },
             {
-              params: new HttpParams().set('access_token', user.token),
+              params: new HttpParams().set('auth', user.token),
             }
           )
           .pipe(
             map((resData) =>
               actions.createBoardSuccess({
                 board: {
-                  id: resData.id,
+                  id: resData.name,
                   title: action.title,
                   lists: [],
                 },

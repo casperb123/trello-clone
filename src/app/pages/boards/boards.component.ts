@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DialogType } from 'src/app/app.enums';
+import { AppService } from 'src/app/app.service';
 import { Board } from './board/board.interface';
 import { BoardsService } from './boards.service';
 
@@ -10,8 +12,12 @@ import { BoardsService } from './boards.service';
 })
 export class BoardsComponent implements OnInit {
   public boards$: Observable<Board[]>;
+  public dialogType = DialogType;
 
-  constructor(private boardsService: BoardsService) {}
+  constructor(
+    private boardsService: BoardsService,
+    public appService: AppService
+  ) {}
 
   ngOnInit(): void {
     this.boards$ = this.boardsService.getBoards();

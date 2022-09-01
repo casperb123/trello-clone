@@ -3,3 +3,9 @@ export enum DialogType {
   'Register',
   'CreateBoard',
 }
+
+export enum ControlType {
+  Email = 'email',
+  Password = 'password',
+  Title = 'title',
+}

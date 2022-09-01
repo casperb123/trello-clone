@@ -5,6 +5,7 @@ import { catchError, exhaustMap, map, of } from 'rxjs';
 import { AuthResponse } from 'src/app/pages/authentication/authentication.interfaces';
 import { User } from 'src/app/pages/authentication/authentication.models';
 import { AuthenticationService } from 'src/app/pages/authentication/authentication.service';
+import { loadBoards } from '../boards/boards.actions';
 import * as actions from './authentication.actions';
 
 @Injectable()
@@ -48,6 +49,13 @@ export class AuthenticationEffects {
             )
           )
       )
+    )
+  );
+
+  loginSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.loginSuccess),
+      map(() => loadBoards())
     )
   );
 }

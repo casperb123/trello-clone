@@ -14,6 +14,30 @@ export class BoardsFacade {
     return this.store$.select(selectors.selectBoardsState);
   }
 
+  public getIsLoading(): Observable<boolean> {
+    return this.store$.select(selectors.getIsLoading);
+  }
+
+  public getIsLoaded(): Observable<boolean> {
+    return this.store$.select(selectors.getIsLoaded);
+  }
+
+  public getLoadingError(): Observable<any> {
+    return this.store$.select(selectors.getLoadingError);
+  }
+
+  public getCreateIsLoading(): Observable<boolean> {
+    return this.store$.select(selectors.getCreateIsLoading);
+  }
+
+  public getCreateIsLoaded(): Observable<boolean> {
+    return this.store$.select(selectors.getCreateIsLoaded);
+  }
+
+  public getCreateLoadingError(): Observable<boolean> {
+    return this.store$.select(selectors.getCreateLoadingError);
+  }
+
   public getBoards(): Observable<Board[]> {
     return this.getBoardsState().pipe(
       tap((state) => {
@@ -36,5 +60,9 @@ export class BoardsFacade {
 
   public deleteBoard(boardId: string): void {
     this.store$.dispatch(actions.deleteBoard({ boardId: boardId }));
+  }
+
+  public resetCreateState(): void {
+    this.store$.dispatch(actions.resetCreateState());
   }
 }

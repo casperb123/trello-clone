@@ -9,7 +9,10 @@ export const loadBoardsSuccess = createAction(
   props<{ boards: Board[] }>()
 );
 
-export const loadBoardsError = createAction('[Boards] Load Boards Error');
+export const loadBoardsError = createAction(
+  '[Boards] Load Boards Error',
+  props<{ error: any }>()
+);
 
 export const createBoard = createAction(
   '[Boards] Create Board',
@@ -52,3 +55,5 @@ export const deleteBoardError = createAction(
   '[Boards] Delete Board Error',
   props<{ error: any }>()
 );
+
+export const resetCreateState = createAction('[Boards] Reset Create State');
