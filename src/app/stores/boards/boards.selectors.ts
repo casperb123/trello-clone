@@ -12,11 +12,6 @@ export const selectBoardsState = createSelector(
 export const { selectAll, selectEntities, selectIds, selectTotal } =
   reducer.adapter.getSelectors(selectBoardsState);
 
-export const selectCreateBoardState = createSelector(
-  selectBoardsState,
-  (state) => state.create
-);
-
 export const getIsLoading = createSelector(
   selectBoardsState,
   (state) => state.loading
@@ -29,21 +24,6 @@ export const getIsLoaded = createSelector(
 
 export const getLoadingError = createSelector(
   selectBoardsState,
-  (state) => state.loadingError
-);
-
-export const getCreateIsLoading = createSelector(
-  selectCreateBoardState,
-  (state) => state.loading
-);
-
-export const getCreateIsLoaded = createSelector(
-  selectCreateBoardState,
-  (state) => state.loaded
-);
-
-export const getCreateLoadingError = createSelector(
-  selectCreateBoardState,
   (state) => state.loadingError
 );
 

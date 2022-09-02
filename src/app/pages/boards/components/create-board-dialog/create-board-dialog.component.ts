@@ -6,10 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { filter, Observable, Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 import { ControlType } from 'src/app/app.enums';
 import { AppService } from 'src/app/app.service';
-import { BoardsService } from '../../boards.service';
+import { BoardsService } from '../../utilities/boards.service';
 
 @Component({
   selector: 'app-create-board-dialog',
@@ -17,12 +18,12 @@ import { BoardsService } from '../../boards.service';
   styleUrls: ['./create-board-dialog.component.scss'],
 })
 export class CreateBoardDialogComponent implements OnInit, OnDestroy {
-  private isLoadedSub: Subscription;
+  private createBoardSub: Subscription;
 
   public form: FormGroup;
   public controlType = ControlType;
-  public isLoading$: Observable<boolean>;
-  public loadingError$: Observable<any>;
+  public isLoading: boolean;
+  public loadingError: any;
 
   public get title(): AbstractControl {
     return this.form.get('title');
@@ -31,6 +32,7 @@ export class CreateBoardDialogComponent implements OnInit, OnDestroy {
   constructor(
     private dialogRef: MatDialogRef<CreateBoardDialogComponent>,
     private boardsService: BoardsService,
+    private snackBar: MatSnackBar,
     public appService: AppService
   ) {}
 
@@ -38,15 +40,6 @@ export class CreateBoardDialogComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       title: new FormControl('', [Validators.required]),
     });
-    this.isLoading$ = this.boardsService.getCreateIsLoading();
-    this.loadingError$ = this.boardsService.getCreateLoadingError();
-    this.isLoadedSub = this.boardsService
-      .getCreateIsLoaded()
-      .pipe(filter((isLoaded) => isLoaded))
-      .subscribe(() => {
-        this.dialogRef.close();
-        this.boardsService.resetCreateState();
-      });
   }
 
   public onSubmit(): void {
@@ -54,12 +47,30 @@ export class CreateBoardDialogComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.boardsService.createBoard(this.title.value);
+    this.createBoardSub = this.boardsService
+      .createBoard(this.title.value)
+      .subscribe({
+        next: (board) => {
+          this.isLoading = false;
+          this.dialogRef.close();
+          this.snackBar.open(
+            `The board "${board.title}" has been created`,
+            'OK',
+            {
+              duration: 5000,
+            }
+          );
+        },
+        error: (error) => {
+          this.loadingError = error;
+          console.log('Error', error);
+        },
+      });
   }
 
   ngOnDestroy(): void {
-    if (this.isLoadedSub) {
-      this.isLoadedSub.unsubscribe();
+    if (this.createBoardSub) {
+      this.createBoardSub.unsubscribe();
     }
   }
 }

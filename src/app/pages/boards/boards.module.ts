@@ -7,6 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -32,6 +33,7 @@ import { CreateBoardDialogComponent } from './components/create-board-dialog/cre
     FormsModule,
     ReactiveFormsModule,
     MatProgressBarModule,
+    MatSnackBarModule,
     StoreModule.forFeature('boards', boardsReducer),
     EffectsModule.forFeature([BoardEffects]),
   ],

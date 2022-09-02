@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BoardsFacade } from 'src/app/stores/boards/boards.facade';
-import { Board } from './board.interface';
+import { Board } from '../utilities/boards.models';
 
 @Component({
   selector: 'app-board',
