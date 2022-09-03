@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { BoardsFacade } from 'src/app/stores/boards/boards.facade';
+import { BoardsFacade } from '../store/boards.facade';
 import { Board } from '../utilities/boards.models';
 
 @Component({

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { AuthenticationFacade } from 'src/app/stores/authentication/authentication.facade';
+import { AuthenticationFacade } from '../store/authentication.facade';
 import { AuthError } from './authentication.enums';
 import { AuthResponse } from './authentication.interfaces';
 import { User } from './authentication.models';

@@ -9,7 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { filter, Observable, Subscription, tap } from 'rxjs';
 import { ControlType, DialogType } from 'src/app/app.enums';
 import { AppService } from 'src/app/app.service';
-import { AuthenticationService } from '../../authentication.service';
+import { AuthenticationService } from '../../utilities/authentication.service';
 
 @Component({
   selector: 'app-login-dialog',

@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of } from 'rxjs';
-import { AuthResponse } from 'src/app/pages/authentication/authentication.interfaces';
-import { User } from 'src/app/pages/authentication/authentication.models';
-import { AuthenticationService } from 'src/app/pages/authentication/authentication.service';
-import * as boardActions from '../boards/boards.actions';
+import { AuthResponse } from 'src/app/pages/authentication/utilities/authentication.interfaces';
+import { User } from 'src/app/pages/authentication/utilities/authentication.models';
+import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
+import * as boardActions from '../../boards/store/boards.actions';
 import * as actions from './authentication.actions';
 
 @Injectable()

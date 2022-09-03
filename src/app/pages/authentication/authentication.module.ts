@@ -9,10 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { AuthenticationEffects } from 'src/app/stores/authentication/authentication.effects';
-import { authenticationReducer } from 'src/app/stores/authentication/authentication.reducer';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import { AuthenticationEffects } from './store/authentication.effects';
+import { authenticationReducer } from './store/authentication.reducer';
 
 @NgModule({
   declarations: [LoginDialogComponent, RegisterDialogComponent],

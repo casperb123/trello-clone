@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exhaustMap, filter, map, Observable } from 'rxjs';
-import { BoardsFacade } from 'src/app/stores/boards/boards.facade';
-import { AuthenticationService } from '../../authentication/authentication.service';
+import { AuthenticationService } from '../../authentication/utilities/authentication.service';
+import { BoardsFacade } from '../store/boards.facade';
 import { CreateBoardResponse } from './boards.interfaces';
 import { Board } from './boards.models';
 

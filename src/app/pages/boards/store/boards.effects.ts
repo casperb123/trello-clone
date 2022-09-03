@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
-import { AuthenticationService } from 'src/app/pages/authentication/authentication.service';
+import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
 import { Board } from 'src/app/pages/boards/utilities/boards.models';
 import * as actions from './boards.actions';
 

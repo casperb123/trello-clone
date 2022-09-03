@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/pages/authentication/authentication.models';
+import { User } from 'src/app/pages/authentication/utilities/authentication.models';
 import * as actions from './authentication.actions';
 
 export interface State {
