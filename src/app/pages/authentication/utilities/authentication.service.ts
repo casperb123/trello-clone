@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthenticationFacade } from '../store/authentication.facade';
 import { AuthError } from './authentication.enums';
-import { AuthResponse } from './authentication.interfaces';
+import { AuthResponse, UserInterface } from './authentication.interfaces';
 import { User } from './authentication.models';
 
 @Injectable({
@@ -60,6 +60,26 @@ export class AuthenticationService {
     this.authFacade.registerLogin(
       new User(email, id, token, this.handleExpireDate(tokenExpiration))
     );
+  }
+
+  public autoLogin(): void {
+    const userData: UserInterface = JSON.parse(
+      localStorage.getItem('userData')
+    );
+    if (!userData) {
+      return;
+    }
+
+    const user = new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+
+    if (user.token) {
+      this.authFacade.autoLogin(user);
+    }
   }
 
   public logout(): void {

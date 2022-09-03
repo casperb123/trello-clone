@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 import { AuthResponse } from 'src/app/pages/authentication/utilities/authentication.interfaces';
@@ -13,7 +14,8 @@ export class AuthenticationEffects {
   constructor(
     private actions$: Actions,
     private http: HttpClient,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private router: Router
   ) {}
 
   login$ = createEffect(() =>
@@ -31,13 +33,16 @@ export class AuthenticationEffects {
           )
           .pipe(
             map((response) => {
+              const user = new User(
+                response.email,
+                response.localId,
+                response.idToken,
+                this.authService.handleExpireDate(response.expiresIn)
+              );
+              localStorage.setItem('userData', JSON.stringify(user));
+
               return actions.loginSuccess({
-                user: new User(
-                  response.email,
-                  response.localId,
-                  response.idToken,
-                  this.authService.handleExpireDate(response.expiresIn)
-                ),
+                user: user,
               });
             }),
             catchError((errorResponse) =>
@@ -52,17 +57,15 @@ export class AuthenticationEffects {
     )
   );
 
-  loginSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(actions.loginSuccess),
-      map(() => boardActions.loadBoards())
-    )
-  );
-
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(actions.logout),
-      map(() => boardActions.resetBoards())
+      map(() => {
+        localStorage.removeItem('userData');
+        this.router.navigate(['']);
+
+        return boardActions.resetBoards();
+      })
     )
   );
 }

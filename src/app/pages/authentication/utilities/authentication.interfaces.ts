@@ -6,3 +6,10 @@ export interface AuthResponse {
   localId: string;
   registered?: boolean;
 }
+
+export interface UserInterface {
+  email: string;
+  id: string;
+  _token: string;
+  _tokenExpirationDate: Date;
+}
