@@ -81,19 +81,13 @@ export class AuthenticationService {
   }
 
   private refreshToken(refreshToken: string): Observable<RefreshTokenResponse> {
-    return this.http
-      .post<RefreshTokenResponse>(
-        `https://securetoken.googleapis.com/v1/token?key=${environment.firebaseApiKey}`,
-        {
-          grant_type: 'refresh_token',
-          refresh_token: refreshToken,
-        }
-      )
-      .pipe(
-        catchError((error: HttpErrorResponse) =>
-          throwError(() => this.handleAuthError(error))
-        )
-      );
+    return this.http.post<RefreshTokenResponse>(
+      `https://securetoken.googleapis.com/v1/token?key=${environment.firebaseApiKey}`,
+      {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      }
+    );
   }
 
   public autoLogin(): void {
@@ -130,8 +124,8 @@ export class AuthenticationService {
               user.rememberMe
             );
           },
-          error: (errorMessage) => {
-            this.snackBar.open(errorMessage, 'OK');
+          error: () => {
+            this.logout();
           },
         });
     }
