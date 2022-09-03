@@ -17,6 +17,10 @@ export class BoardsInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    if (!request.url.includes('boards')) {
+      return next.handle(request);
+    }
+
     return this.authService.getUserLoggedIn().pipe(
       exhaustMap((user) => {
         if (!user) {
