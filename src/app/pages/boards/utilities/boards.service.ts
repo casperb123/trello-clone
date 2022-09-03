@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exhaustMap, filter, map, Observable } from 'rxjs';
 import { AuthenticationService } from '../../authentication/utilities/authentication.service';
@@ -43,9 +43,6 @@ export class BoardsService {
             `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/boards.json`,
             {
               title: title,
-            },
-            {
-              params: new HttpParams().set('auth', user.token),
             }
           )
           .pipe(

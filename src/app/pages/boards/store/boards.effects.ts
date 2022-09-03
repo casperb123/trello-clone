@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
@@ -21,10 +21,7 @@ export class BoardEffects {
       exhaustMap((user) =>
         this.http
           .get(
-            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/boards.json`,
-            {
-              params: new HttpParams().set('auth', user.token),
-            }
+            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/boards.json`
           )
           .pipe(
             map((response) => {

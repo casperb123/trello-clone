@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +18,7 @@ import { BoardsComponent } from './boards.component';
 import { CreateBoardDialogComponent } from './components/create-board-dialog/create-board-dialog.component';
 import { BoardEffects } from './store/boards.effects';
 import { boardsReducer } from './store/boards.reducer';
+import { BoardsInterceptor } from './utilities/boards.interceptor';
 
 @NgModule({
   declarations: [BoardsComponent, CreateBoardDialogComponent],
@@ -36,6 +38,13 @@ import { boardsReducer } from './store/boards.reducer';
     MatSnackBarModule,
     StoreModule.forFeature('boards', boardsReducer),
     EffectsModule.forFeature([BoardEffects]),
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BoardsInterceptor,
+      multi: true,
+    },
   ],
 })
 export class BoardsModule {}
