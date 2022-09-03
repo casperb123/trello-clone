@@ -6,6 +6,7 @@ import { catchError, exhaustMap, map, of } from 'rxjs';
 import { AuthResponse } from 'src/app/pages/authentication/utilities/authentication.interfaces';
 import { User } from 'src/app/pages/authentication/utilities/authentication.models';
 import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
+import { environment } from 'src/environments/environment';
 import * as boardActions from '../../boards/store/boards.actions';
 import * as actions from './authentication.actions';
 
@@ -24,7 +25,7 @@ export class AuthenticationEffects {
       exhaustMap((action) =>
         this.http
           .post<AuthResponse>(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD_UOHQ3neS57-J0Mx4BtaaL8MSxQPjdJA',
+            `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseApiKey}`,
             {
               email: action.email,
               password: action.password,
