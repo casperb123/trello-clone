@@ -3,7 +3,7 @@ import { User } from 'src/app/pages/authentication/utilities/authentication.mode
 
 export const login = createAction(
   '[Authentication] Login',
-  props<{ email: string; password: string }>()
+  props<{ email: string; password: string; rememberMe: boolean }>()
 );
 
 export const loginSuccess = createAction(
@@ -17,3 +17,8 @@ export const loginError = createAction(
 );
 
 export const logout = createAction('[Authentication] Logout');
+
+export const updateUser = createAction(
+  '[Authentication] Update User',
+  props<{ user: User }>()
+);

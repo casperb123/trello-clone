@@ -10,15 +10,21 @@ import * as selectors from './authentication.selectors';
 export class AuthenticationFacade {
   constructor(private store$: Store<State>) {}
 
-  public login(email: string, password: string): void {
-    this.store$.dispatch(actions.login({ email: email, password: password }));
+  public login(email: string, password: string, rememberMe: boolean): void {
+    this.store$.dispatch(
+      actions.login({
+        email: email,
+        password: password,
+        rememberMe: rememberMe,
+      })
+    );
   }
 
   public autoLogin(user: User): void {
     this.store$.dispatch(actions.loginSuccess({ user: user }));
   }
 
-  public registerLogin(user: User): void {
+  public loginSuccess(user: User): void {
     this.store$.dispatch(actions.loginSuccess({ user: user }));
   }
 

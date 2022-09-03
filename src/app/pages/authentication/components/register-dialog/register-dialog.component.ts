@@ -32,6 +32,10 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
     return this.form.get('password');
   }
 
+  public get rememberMe(): AbstractControl {
+    return this.form.get('rememberMe');
+  }
+
   constructor(
     private dialogRef: MatDialogRef<RegisterDialogComponent>,
     public appService: AppService,
@@ -45,6 +49,7 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(6),
       ]),
+      rememberMe: new FormControl(false),
     });
     this.subs = [];
 
@@ -82,11 +87,13 @@ export class RegisterDialogComponent implements OnInit, OnDestroy {
         .register(this.email.value, this.password.value)
         .subscribe({
           next: (response) => {
-            this.authService.registerLogin(
+            this.authService.loginSuccess(
               response.email,
               response.localId,
               response.idToken,
-              response.expiresIn
+              response.refreshToken,
+              response.expiresIn,
+              this.rememberMe.value
             );
           },
           error: (error: string) => {

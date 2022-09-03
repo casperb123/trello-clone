@@ -7,6 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
@@ -26,6 +27,7 @@ import { authenticationReducer } from './store/authentication.reducer';
     ReactiveFormsModule,
     MatProgressBarModule,
     MatCheckboxModule,
+    MatSnackBarModule,
     StoreModule.forFeature('authentication', authenticationReducer),
     EffectsModule.forFeature([AuthenticationEffects]),
   ],

@@ -7,7 +7,7 @@ import { AuthResponse } from 'src/app/pages/authentication/utilities/authenticat
 import { User } from 'src/app/pages/authentication/utilities/authentication.models';
 import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
 import { environment } from 'src/environments/environment';
-import * as boardActions from '../../boards/store/boards.actions';
+import { resetBoards } from '../../boards/store/boards.actions';
 import * as actions from './authentication.actions';
 
 @Injectable()
@@ -38,9 +38,10 @@ export class AuthenticationEffects {
                 response.email,
                 response.localId,
                 response.idToken,
-                this.authService.handleExpireDate(response.expiresIn)
+                response.refreshToken,
+                this.authService.handleExpireDate(response.expiresIn),
+                action.rememberMe
               );
-              localStorage.setItem('userData', JSON.stringify(user));
 
               return actions.loginSuccess({
                 user: user,
@@ -65,7 +66,7 @@ export class AuthenticationEffects {
         localStorage.removeItem('userData');
         this.router.navigate(['']);
 
-        return boardActions.resetBoards();
+        return resetBoards();
       })
     )
   );

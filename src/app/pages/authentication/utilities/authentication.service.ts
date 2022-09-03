@@ -1,19 +1,27 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, Observable, take, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationFacade } from '../store/authentication.facade';
 import { AuthError } from './authentication.enums';
-import { AuthResponse, UserInterface } from './authentication.interfaces';
+import {
+  AuthResponse,
+  RefreshTokenResponse,
+  UserInterface,
+} from './authentication.interfaces';
 import { User } from './authentication.models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
+  private logoutTimer: any;
+
   constructor(
     private http: HttpClient,
-    private authFacade: AuthenticationFacade
+    private authFacade: AuthenticationFacade,
+    private snackBar: MatSnackBar
   ) {}
 
   public handleAuthError(error: HttpErrorResponse): string {
@@ -48,25 +56,51 @@ export class AuthenticationService {
       );
   }
 
-  public login(email: string, password: string): void {
-    this.authFacade.login(email, password);
+  public login(email: string, password: string, rememberMe: boolean): void {
+    this.authFacade.login(email, password, rememberMe);
   }
 
-  public registerLogin(
+  public loginSuccess(
     email: string,
     id: string,
     token: string,
-    tokenExpiration: string
+    refreshToken: string,
+    tokenExpiration: string,
+    rememberMe: boolean
   ): void {
-    this.authFacade.registerLogin(
-      new User(email, id, token, this.handleExpireDate(tokenExpiration))
+    this.authFacade.loginSuccess(
+      new User(
+        email,
+        id,
+        token,
+        refreshToken,
+        this.handleExpireDate(tokenExpiration),
+        rememberMe
+      )
     );
+  }
+
+  private refreshToken(refreshToken: string): Observable<RefreshTokenResponse> {
+    return this.http
+      .post<RefreshTokenResponse>(
+        `https://securetoken.googleapis.com/v1/token?key=${environment.firebaseApiKey}`,
+        {
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken,
+        }
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) =>
+          throwError(() => this.handleAuthError(error))
+        )
+      );
   }
 
   public autoLogin(): void {
     const userData: UserInterface = JSON.parse(
       localStorage.getItem('userData')
     );
+
     if (!userData) {
       return;
     }
@@ -75,16 +109,42 @@ export class AuthenticationService {
       userData.email,
       userData.id,
       userData._token,
-      new Date(userData._tokenExpirationDate)
+      userData.refreshToken,
+      new Date(userData.tokenExpirationDate),
+      userData.rememberMe
     );
 
     if (user.token) {
       this.authFacade.autoLogin(user);
+    } else if (user.rememberMe) {
+      this.refreshToken(user.refreshToken)
+        .pipe(take(1))
+        .subscribe({
+          next: (response) => {
+            this.loginSuccess(
+              user.email,
+              user.id,
+              response.id_token,
+              response.refresh_token,
+              response.expires_in,
+              user.rememberMe
+            );
+          },
+          error: (errorMessage) => {
+            this.snackBar.open(errorMessage, 'OK');
+          },
+        });
     }
   }
 
   public logout(): void {
     this.authFacade.logout();
+  }
+
+  public autoLogout(expiration: number): void {
+    this.logoutTimer = setTimeout(() => {
+      this.logout();
+    }, expiration);
   }
 
   public getIsLoggingIn(): Observable<boolean> {

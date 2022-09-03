@@ -76,7 +76,11 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.authService.login(this.email.value, this.password.value);
+    this.authService.login(
+      this.email.value,
+      this.password.value,
+      this.rememberMe.value
+    );
   }
 
   ngOnDestroy(): void {
