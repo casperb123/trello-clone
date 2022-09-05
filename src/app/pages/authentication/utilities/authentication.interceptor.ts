@@ -7,17 +7,20 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exhaustMap, Observable } from 'rxjs';
-import { AuthenticationService } from '../../authentication/utilities/authentication.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
-export class BoardsInterceptor implements HttpInterceptor {
+export class AuthenticationInterceptor implements HttpInterceptor {
   constructor(private authService: AuthenticationService) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!request.url.includes('boards')) {
+    if (
+      !request.url.includes('boards') &&
+      !request.url.includes('workspaces')
+    ) {
       return next.handle(request);
     }
 

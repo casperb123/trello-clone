@@ -1,0 +1,42 @@
+<form (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>Create Workspace</h1>
+  <div class="content" [formGroup]="form">
+    <mat-progress-bar
+      mode="indeterminate"
+      *ngIf="isLoading; else formFields"
+    ></mat-progress-bar>
+    <ng-template #formFields>
+      <mat-error class="error-message" *ngIf="loadingError">Error</mat-error>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Enter a title" formControlName="title" />
+        <mat-error *ngIf="title.invalid">{{
+          appService.getFormValidationError(title, controlType.Title)
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          placeholder="Enter a description"
+          formControlName="description"
+        ></textarea>
+        <mat-error *ngIf="description.invalid">{{
+          appService.getFormValidationError(title, controlType.Description)
+        }}</mat-error>
+      </mat-form-field>
+    </ng-template>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="!form.valid"
+    >
+      Create
+    </button>
+    <button type="button" mat-button mat-dialog-close>Cancel</button>
+  </div>
+</form>

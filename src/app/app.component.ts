@@ -22,9 +22,11 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((user) => {
         const tokenExpire =
           new Date(user.tokenExpirationDate).getTime() - new Date().getTime();
-
-        localStorage.setItem('userData', JSON.stringify(user));
         this.authService.autoLogout(tokenExpire);
+
+        if (user.rememberMe) {
+          localStorage.setItem('userData', JSON.stringify(user));
+        }
       });
   }
 

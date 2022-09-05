@@ -1,6 +1,6 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { Board } from 'src/app/pages/boards/utilities/boards.models';
+import { Board } from '../board/utilities/board.interfaces';
 
 export const loadBoards = createAction('[Boards] Load Boards');
 

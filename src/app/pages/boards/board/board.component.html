@@ -1,6 +1,1 @@
-<h1>{{ board.title }}</h1>
-<ul>
-  <li *ngFor="let list of board.lists">
-    <app-list [list]="list"></app-list>
-  </li>
-</ul>
+<h1>{{ (board$ | async).title }}</h1>

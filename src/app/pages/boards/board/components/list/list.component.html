@@ -1,5 +1,16 @@
-<ul class="lists">
-  <li *ngFor="let card of list.cards">
-    <app-card [card]="card"></app-card>
-  </li>
-</ul>
+<mat-card>
+  <mat-card-header>{{ list.title }}</mat-card-header>
+  <mat-card-content>
+    <ul class="lists">
+      <li *ngFor="let card of list.cards">
+        <app-card [card]="card"></app-card>
+      </li>
+    </ul>
+  </mat-card-content>
+  <mat-card-actions>
+    <button type="button">
+      <mat-icon fontIcon="add"></mat-icon>
+      <span>Add a card</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

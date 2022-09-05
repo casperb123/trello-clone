@@ -1,0 +1,31 @@
+<div class="title-wrapper">
+  <div class="title">
+    <h1>Your Workspaces</h1>
+    <button
+      type="button"
+      mat-mini-fab
+      color="primary"
+      aria-label="Create workspace"
+      matTooltip="Create Workspace"
+      (click)="openCreateWorkspaceDialog()"
+    >
+      <mat-icon fontIcon="add"></mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+</div>
+<ul class="list">
+  <li *ngFor="let workspace of workspaces$ | async" class="list-item">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ workspace.title }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ workspace.description }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-boards [boards]="workspace.boards"></app-boards>
+    </mat-expansion-panel>
+  </li>
+</ul>

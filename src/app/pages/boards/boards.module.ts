@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
@@ -18,7 +18,6 @@ import { BoardsComponent } from './boards.component';
 import { CreateBoardDialogComponent } from './components/create-board-dialog/create-board-dialog.component';
 import { BoardEffects } from './store/boards.effects';
 import { boardsReducer } from './store/boards.reducer';
-import { BoardsInterceptor } from './utilities/boards.interceptor';
 
 @NgModule({
   declarations: [BoardsComponent, CreateBoardDialogComponent],
@@ -36,15 +35,10 @@ import { BoardsInterceptor } from './utilities/boards.interceptor';
     ReactiveFormsModule,
     MatProgressBarModule,
     MatSnackBarModule,
+    MatSelectModule,
     StoreModule.forFeature('boards', boardsReducer),
     EffectsModule.forFeature([BoardEffects]),
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: BoardsInterceptor,
-      multi: true,
-    },
-  ],
+  exports: [BoardsComponent],
 })
 export class BoardsModule {}

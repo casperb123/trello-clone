@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
-import { Board } from 'src/app/pages/boards/utilities/boards.models';
+import { Board } from '../board/utilities/board.interfaces';
 import * as actions from './boards.actions';
 
 @Injectable()
@@ -27,9 +27,12 @@ export class BoardEffects {
             map((response) => {
               const boardsArray: Board[] = [];
               for (const key in response) {
-                boardsArray.push(
-                  new Board(key, response[key].title, response[key].lists)
-                );
+                boardsArray.push({
+                  id: key,
+                  workspaceId: response[key].workspaceId,
+                  title: response[key].title,
+                  backgroundColor: response[key].backgroundColor,
+                });
               }
               return actions.loadBoardsSuccess({ boards: boardsArray });
             }),

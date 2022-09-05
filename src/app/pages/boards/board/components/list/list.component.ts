@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { List } from '../../../utilities/boards.models';
+import { List } from './utilities/list.models';
 
 @Component({
   selector: 'app-list',

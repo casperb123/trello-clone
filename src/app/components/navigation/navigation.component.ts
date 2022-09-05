@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DialogType } from 'src/app/app.enums';
-import { AppService } from 'src/app/app.service';
 import { User } from 'src/app/pages/authentication/utilities/authentication.models';
 import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
+import { DialogType } from 'src/app/utilities/app.enums';
+import { AppService } from 'src/app/utilities/app.service';
 
 @Component({
   selector: 'app-navigation',

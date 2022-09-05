@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +15,7 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 import { AuthenticationEffects } from './store/authentication.effects';
 import { authenticationReducer } from './store/authentication.reducer';
+import { AuthenticationInterceptor } from './utilities/authentication.interceptor';
 
 @NgModule({
   declarations: [LoginDialogComponent, RegisterDialogComponent],
@@ -30,6 +32,13 @@ import { authenticationReducer } from './store/authentication.reducer';
     MatSnackBarModule,
     StoreModule.forFeature('authentication', authenticationReducer),
     EffectsModule.forFeature([AuthenticationEffects]),
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true,
+    },
   ],
 })
 export class AuthenticationModule {}

@@ -33,8 +33,3 @@ export const getBoardById = (boardId: string) =>
   createSelector(getAllBoards, (entities) =>
     entities.find((board) => board.id === boardId)
   );
-
-export const getLoadingBoardsState = createSelector(
-  selectBoardsState,
-  (state) => state.loading
-);

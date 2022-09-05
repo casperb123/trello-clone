@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { BoardsFacade } from '../store/boards.facade';
-import { Board } from '../utilities/boards.models';
+import { Observable, Subscription } from 'rxjs';
+import { BoardsService } from '../utilities/boards.service';
+import { Board } from './utilities/board.interfaces';
 
 @Component({
   selector: 'app-board',
@@ -10,24 +10,25 @@ import { Board } from '../utilities/boards.models';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit, OnDestroy {
-  private boardSub: Subscription;
-  public board: Board;
+  private workspaceSub: Subscription;
+  public board$: Observable<Board>;
 
   constructor(
     private route: ActivatedRoute,
-    private boardsFacade: BoardsFacade
+    private boardsService: BoardsService
   ) {}
 
   ngOnInit(): void {
-    const boardId = this.route.snapshot.paramMap.get('id');
-    this.boardSub = this.boardsFacade
-      .getBoardById(boardId)
-      .subscribe((board) => (this.board = board));
+    const params = this.route.snapshot.paramMap;
+    const workspaceId = params.get('workspaceId');
+    const boardId = params.get('id');
+
+    this.board$ = this.boardsService.getBoardById(boardId, workspaceId);
   }
 
   ngOnDestroy(): void {
-    if (this.boardSub) {
-      this.boardSub.unsubscribe();
+    if (this.workspaceSub) {
+      this.workspaceSub.unsubscribe();
     }
   }
 }

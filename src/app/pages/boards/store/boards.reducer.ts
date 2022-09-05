@@ -1,6 +1,6 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { Board } from 'src/app/pages/boards/utilities/boards.models';
+import { Board } from '../board/utilities/board.interfaces';
 import * as actions from './boards.actions';
 
 export interface State extends EntityState<Board> {
@@ -49,9 +49,13 @@ export const boardsReducer = createReducer(
     })
   ),
   on(actions.updateBoard, (state, action) =>
-    adapter.updateOne(action.board, state)
+    adapter.updateOne(action.board, {
+      ...state,
+    })
   ),
   on(actions.deleteBoard, (state, action) =>
-    adapter.removeOne(action.boardId, state)
+    adapter.removeOne(action.boardId, {
+      ...state,
+    })
   )
 );

@@ -2,14 +2,28 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { LoginDialogComponent } from '../pages/authentication/components/login-dialog/login-dialog.component';
+import { RegisterDialogComponent } from '../pages/authentication/components/register-dialog/register-dialog.component';
+import { CreateBoardDialogComponent } from '../pages/boards/components/create-board-dialog/create-board-dialog.component';
+import { CreateWorkspaceComponent } from '../pages/workspaces/components/create-workspace/create-workspace.component';
 import { ControlType, DialogType } from './app.enums';
-import { LoginDialogComponent } from './pages/authentication/components/login-dialog/login-dialog.component';
-import { RegisterDialogComponent } from './pages/authentication/components/register-dialog/register-dialog.component';
-import { CreateBoardDialogComponent } from './pages/boards/components/create-board-dialog/create-board-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    // this.matIconRegistry.addSvgIcon(
+    //   'plus',
+    //   this.domSanitizer.bypassSecurityTrustResourceUrl(
+    //     'src/app/assets/plus-icon.svg'
+    //   )
+    // );
+  }
 
   public openDialog(dialogType: DialogType): void {
     let component: ComponentType<any>;
@@ -19,6 +33,9 @@ export class AppService {
         break;
       case DialogType.Register:
         component = RegisterDialogComponent;
+        break;
+      case DialogType.CreateWorkspace:
+        component = CreateWorkspaceComponent;
         break;
       case DialogType.CreateBoard:
         component = CreateBoardDialogComponent;
@@ -44,6 +61,10 @@ export class AppService {
 
     if (control.hasError('email')) {
       return 'Not a valid email';
+    }
+
+    if (control.hasError('min') || control.hasError('max')) {
+      return `The ${controlType} must be between 0 and 255`;
     }
 
     return '';

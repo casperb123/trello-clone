@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Update } from '@ngrx/entity';
 import { Store } from '@ngrx/store';
 import { filter, Observable, switchMap, tap } from 'rxjs';
-import { Board } from 'src/app/pages/boards/utilities/boards.models';
+import { Board } from '../board/utilities/board.interfaces';
 import * as actions from './boards.actions';
 import { State } from './boards.reducer';
 import * as selectors from './boards.selectors';
@@ -44,6 +45,18 @@ export class BoardsFacade {
 
   public addBoard(board: Board): void {
     this.store$.dispatch(actions.addBoard({ board: board }));
+  }
+
+  public updateBoard(board: Board): void {
+    const update: Update<Board> = {
+      id: board.id,
+      changes: {
+        workspaceId: board.workspaceId,
+        title: board.title,
+        backgroundColor: board.backgroundColor,
+      },
+    };
+    this.store$.dispatch(actions.updateBoard({ board: update }));
   }
 
   public deleteBoard(boardId: string): void {

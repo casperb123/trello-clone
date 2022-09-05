@@ -11,9 +11,17 @@
       <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
         <input matInput placeholder="Enter a title" formControlName="title" />
-        <mat-error *ngIf="title.invalid && (title.dirty || title.touched)">{{
+        <mat-error *ngIf="title.invalid">{{
           appService.getFormValidationError(title, controlType.Title)
         }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Background Color</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let color of colors" [value]="color">{{
+            color
+          }}</mat-option>
+        </mat-select>
       </mat-form-field>
     </ng-template>
   </div>
