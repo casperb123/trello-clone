@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { AuthenticationService } from './pages/authentication/utilities/authentication.service';
 
@@ -12,7 +13,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public title = 'trello-clone';
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.authService.autoLogin();
@@ -20,13 +24,11 @@ export class AppComponent implements OnInit, OnDestroy {
       .getUserLoggedIn()
       .pipe(filter((user) => !!user && !!user.token))
       .subscribe((user) => {
-        const tokenExpire =
-          new Date(user.tokenExpirationDate).getTime() - new Date().getTime();
-        this.authService.autoLogout(tokenExpire);
-
         if (user.rememberMe) {
           localStorage.setItem('userData', JSON.stringify(user));
         }
+
+        this.router.navigate(['/workspaces']);
       });
   }
 

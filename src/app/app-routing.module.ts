@@ -1,21 +1,35 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingComponent } from './pages/landing/landing.component';
+import { AuthenticateGuard } from './pages/authentication/utilities/authenticate.guard';
+import { BoardComponent } from './pages/boards/board/board.component';
+import { HomeComponent } from './pages/home/home.component';
+import { WorkspaceComponent } from './pages/workspaces/workspace/workspace.component';
+import { WorkspacesComponent } from './pages/workspaces/workspaces.component';
 
 let routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/landing',
+    redirectTo: '/home',
   },
   {
-    path: 'landing',
-    component: LandingComponent,
+    path: 'home',
+    component: HomeComponent,
   },
   {
-    path: 'boards',
-    loadChildren: () =>
-      import('./pages/boards/boards.module').then((m) => m.BoardsModule),
+    path: 'workspaces',
+    component: WorkspacesComponent,
+    canActivate: [AuthenticateGuard],
+  },
+  {
+    path: 'workspaces/:id',
+    component: WorkspaceComponent,
+    canActivate: [AuthenticateGuard],
+  },
+  {
+    path: 'workspaces/:workspaceId/:boardId',
+    component: BoardComponent,
+    canActivate: [AuthenticateGuard],
   },
 ];
 

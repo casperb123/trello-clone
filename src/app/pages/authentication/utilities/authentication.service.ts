@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, Observable, take, throwError } from 'rxjs';
+import { catchError, filter, map, Observable, take, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationFacade } from '../store/authentication.facade';
 import { AuthError } from './authentication.enums';
@@ -135,12 +135,15 @@ export class AuthenticationService {
 
   public logout(): void {
     this.authFacade.logout();
-  }
-
-  public autoLogout(expiration: number): void {
-    this.logoutTimer = setTimeout(() => {
-      this.logout();
-    }, expiration);
+    this.getUserLoggedIn()
+      .pipe(
+        filter((user) => !user),
+        take(1)
+      )
+      .subscribe(() => {
+        localStorage.removeItem('userData');
+        window.location.reload();
+      });
   }
 
   public getIsLoggingIn(): Observable<boolean> {
@@ -149,6 +152,10 @@ export class AuthenticationService {
 
   public getUserLoggedIn(): Observable<User> {
     return this.authFacade.getUserLoggedIn();
+  }
+
+  public isLoggedIn(): Observable<boolean> {
+    return this.getUserLoggedIn().pipe(map((user) => !!user && !!user.token));
   }
 
   public getLoginError(): Observable<string> {

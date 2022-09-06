@@ -4,34 +4,29 @@ import { exhaustMap, filter, map, Observable } from 'rxjs';
 import { CreateResponse } from 'src/app/utilities/app.interfaces';
 import { AuthenticationService } from '../../authentication/utilities/authentication.service';
 import { WorkspacesService } from '../../workspaces/utilities/workspaces.service';
-import { Color } from '../board/utilities/board.enums';
-import { Board } from '../board/utilities/board.interfaces';
-import { BoardsFacade } from '../store/boards.facade';
-import { UpdateBoardResponse } from './boards.interfaces';
+import { Workspace } from '../../workspaces/workspace/utilities/workspace.models';
+import { Board } from '../board/utilities/board.models';
+import { BoardsObject, UpdateBoardResponse } from './boards.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class BoardsService {
   constructor(
-    private boardsFacade: BoardsFacade,
     private authService: AuthenticationService,
     private http: HttpClient,
     private workspacesService: WorkspacesService
   ) {}
 
-  public getIsLoading(): Observable<boolean> {
-    return this.boardsFacade.getIsLoading();
-  }
-
-  public getIsLoaded(): Observable<boolean> {
-    return this.boardsFacade.getIsLoaded();
-  }
-
-  public getLoadingError(): Observable<any> {
-    return this.boardsFacade.getLoadingError();
-  }
-
-  public getBoards(): Observable<Board[]> {
-    return this.boardsFacade.getBoards();
+  public getBoards(boardsObject: BoardsObject, workspaceId: string): Board[] {
+    return boardsObject
+      ? Object.keys(boardsObject).map((boardIndex) => {
+          return new Board(
+            boardIndex,
+            workspaceId,
+            boardsObject[boardIndex].title,
+            boardsObject[boardIndex].backgroundColor
+          );
+        })
+      : null;
   }
 
   public getBoardById(boardId: string, workspaceId: string): Observable<Board> {
@@ -44,40 +39,39 @@ export class BoardsService {
       );
   }
 
-  public getBoardsForWorkspace(workspaceId: string): Observable<Board[]> {
-    return this.getBoards().pipe(
-      filter((boards) =>
-        boards.some((board) => board.workspaceId === workspaceId)
-      )
-    );
-  }
-
   public createBoard(
-    workspaceId: string,
+    workspace: Workspace,
     title: string,
-    backgroundColor: Color = Color.Gray
+    backgroundColor: string
   ): Observable<Board> {
     return this.authService.getUserLoggedIn().pipe(
       filter((user) => !!user && !!user.token),
       exhaustMap((user) =>
         this.http
           .post<CreateResponse>(
-            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/boards.json`,
+            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/workspaces/${workspace.id}/boards.json`,
             {
-              workspaceId: workspaceId,
+              workspaceId: workspace.id,
               title: title,
               backgroundColor: backgroundColor,
             }
           )
           .pipe(
             map((response) => {
-              const board: Board = {
-                id: response.name,
-                workspaceId: workspaceId,
-                title: title,
-                backgroundColor: backgroundColor,
-              };
-              this.boardsFacade.addBoard(board);
+              const board = new Board(
+                response.name,
+                workspace.id,
+                title,
+                backgroundColor
+              );
+              const newWorkspace = new Workspace(
+                workspace.id,
+                workspace.title,
+                workspace.description,
+                [...workspace.boards, board]
+              );
+              this.workspacesService.updateWorkspace(newWorkspace);
+
               return board;
             })
           )
@@ -100,14 +94,11 @@ export class BoardsService {
           )
           .pipe(
             map((response) => {
-              board = {
-                id: board.id,
-                workspaceId: response.workspaceId,
-                title: response.title,
-                backgroundColor: response.backgroundColor,
-              };
+              board.workspaceId = response.workspaceId;
+              board.title = response.title;
+              board.backgroundColor = response.backgroundColor;
 
-              this.boardsFacade.updateBoard(board);
+              this.workspacesService.updateWorkspace(board.workspace);
               return board;
             })
           )
@@ -115,7 +106,9 @@ export class BoardsService {
     );
   }
 
-  public deleteBoard(boardId: string): void {
-    this.boardsFacade.deleteBoard(boardId);
+  public deleteBoard(board: Board): void {
+    const index = board.workspace.boards.indexOf(board);
+    board.workspace.boards.splice(index, 1);
+    this.workspacesService.updateWorkspace(board.workspace);
   }
 }

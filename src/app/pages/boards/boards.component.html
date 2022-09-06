@@ -1,8 +1,15 @@
 <ul class="list">
-  <li *ngFor="let board of boards" class="list-item">
-    <a mat-stroked-button [routerLink]="[board.id]">{{ board.title }}</a>
+  <li *ngFor="let board of workspace.boards" class="list-item">
+    <a
+      mat-stroked-button
+      [routerLink]="[workspace.id, board.id]"
+      [ngStyle]="{ 'background-color': getColor(board) }"
+      >{{ board.title }}</a
+    >
   </li>
   <li class="list-item">
-    <button type="button" mat-stroked-button>Create new board</button>
+    <button type="button" mat-stroked-button (click)="openCreateBoardDialog()">
+      Create new board
+    </button>
   </li>
 </ul>

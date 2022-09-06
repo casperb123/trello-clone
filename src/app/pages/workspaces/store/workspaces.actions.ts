@@ -1,6 +1,6 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { Workspace } from '../workspace/utilities/workspace.interfaces';
+import { Workspace } from '../workspace/utilities/workspace.models';
 
 export const loadWorkspaces = createAction('[Workspaces] Load Workspaces');
 
@@ -13,8 +13,6 @@ export const loadWorkspacesError = createAction(
   '[Workspaces] Load Workspaces Error',
   props<{ error: any }>()
 );
-
-export const unloadWorkspaces = createAction('[Workspaces] Unload Workspaces');
 
 export const addWorkspace = createAction(
   '[Workspaces] Add Workspace',

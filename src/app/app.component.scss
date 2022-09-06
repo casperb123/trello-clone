@@ -8,7 +8,9 @@
     padding: 16px 0;
 
     .content {
-      width: 50vw;
+      width: 100%;
+      max-width: 1128px;
+      min-width: 260px;
       margin: auto;
     }
   }

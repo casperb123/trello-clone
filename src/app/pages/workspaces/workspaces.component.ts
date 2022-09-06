@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { DialogType } from 'src/app/utilities/app.enums';
 import { AppService } from 'src/app/utilities/app.service';
 import { WorkspacesService } from './utilities/workspaces.service';
-import { Workspace } from './workspace/utilities/workspace.interfaces';
+import { Workspace } from './workspace/utilities/workspace.models';
 
 @Component({
   selector: 'app-workspaces',

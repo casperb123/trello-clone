@@ -9,7 +9,7 @@
       matTooltip="Create Workspace"
       (click)="openCreateWorkspaceDialog()"
     >
-      <mat-icon fontIcon="add"></mat-icon>
+      <mat-icon>add</mat-icon>
     </button>
   </div>
   <mat-divider></mat-divider>
@@ -25,7 +25,7 @@
           {{ workspace.description }}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <app-boards [boards]="workspace.boards"></app-boards>
+      <app-boards [workspace]="workspace"></app-boards>
     </mat-expansion-panel>
   </li>
 </ul>

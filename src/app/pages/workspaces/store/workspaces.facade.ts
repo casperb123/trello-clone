@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Update } from '@ngrx/entity';
 import { Store } from '@ngrx/store';
 import { filter, Observable, switchMap, tap } from 'rxjs';
-import { Workspace } from '../workspace/utilities/workspace.interfaces';
+import { Workspace } from '../workspace/utilities/workspace.models';
 import * as actions from './workspaces.actions';
 import { State } from './workspaces.reducer';
 import * as selectors from './workspaces.selectors';
@@ -27,10 +27,16 @@ export class WorkspacesFacade {
     return this.store$.select(selectors.getLoadingError);
   }
 
-  public getWorkspaces(): Observable<Workspace[]> {
+  public getWorkspaces(isLoggedIn: boolean): Observable<Workspace[]> {
     return this.getWorkspacesState().pipe(
       tap((state) => {
-        if (state && !state.loading && !state.loaded && !state.loadingError) {
+        if (
+          isLoggedIn &&
+          state &&
+          !state.loading &&
+          !state.loaded &&
+          !state.loadingError
+        ) {
           this.store$.dispatch(actions.loadWorkspaces());
         }
       }),

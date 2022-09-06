@@ -8,11 +8,10 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { Workspace } from 'src/app/pages/workspaces/workspace/utilities/workspace.interfaces';
+import { Workspace } from 'src/app/pages/workspaces/workspace/utilities/workspace.models';
 import { ControlType } from 'src/app/utilities/app.enums';
 import { AppService } from 'src/app/utilities/app.service';
 import { Color } from '../../board/utilities/board.enums';
-import { Board } from '../../board/utilities/board.interfaces';
 import { BoardsService } from '../../utilities/boards.service';
 
 @Component({
@@ -33,18 +32,23 @@ export class CreateBoardDialogComponent implements OnInit, OnDestroy {
     return this.form.get('title');
   }
 
+  public get backgroundColor(): AbstractControl {
+    return this.form.get('backgroundColor');
+  }
+
   constructor(
     private dialogRef: MatDialogRef<CreateBoardDialogComponent>,
     private boardsService: BoardsService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA)
-    private data: { workspace: Workspace; board: Board },
+    private data: { workspace: Workspace },
     public appService: AppService
   ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       title: new FormControl('', [Validators.required]),
+      backgroundColor: new FormControl('Gray'),
     });
     this.colors = Object.keys(Color);
   }
@@ -54,25 +58,24 @@ export class CreateBoardDialogComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // this.createBoardSub = this.boardsService
-    //   .createBoard(this.data.workspace, this.title.value)
-    //   .subscribe({
-    //     next: (board) => {
-    //       this.isLoading = false;
-    //       this.dialogRef.close();
-    //       this.snackBar.open(
-    //         `The board "${board.title}" has been created`,
-    //         'OK',
-    //         {
-    //           duration: 5000,
-    //         }
-    //       );
-    //     },
-    //     error: (error) => {
-    //       this.loadingError = error;
-    //       console.log('Error', error);
-    //     },
-    //   });
+    console.log('Workspace', this.data.workspace);
+
+    this.createBoardSub = this.boardsService
+      .createBoard(
+        this.data.workspace,
+        this.title.value,
+        this.backgroundColor.value
+      )
+      .subscribe((board) => {
+        this.dialogRef.close();
+        this.snackBar.open(
+          `The board "${board.title}" has been created`,
+          'OK',
+          {
+            duration: 5000,
+          }
+        );
+      });
   }
 
   ngOnDestroy(): void {

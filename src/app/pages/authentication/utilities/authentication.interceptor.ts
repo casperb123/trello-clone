@@ -17,17 +17,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (
-      !request.url.includes('boards') &&
-      !request.url.includes('workspaces')
-    ) {
+    if (!request.url.includes('workspaces')) {
       return next.handle(request);
     }
 
     return this.authService.getUserLoggedIn().pipe(
       exhaustMap((user) => {
-        if (!user) {
-          return next.handle(request);
+        if (!user || !user.token) {
+          return null;
         }
 
         const newRequest = request.clone({

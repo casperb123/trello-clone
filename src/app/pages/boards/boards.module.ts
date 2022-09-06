@@ -10,19 +10,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 import { BoardModule } from './board/board.module';
-import { BoardsRoutingModule } from './boards-routing.module';
 import { BoardsComponent } from './boards.component';
 import { CreateBoardDialogComponent } from './components/create-board-dialog/create-board-dialog.component';
-import { BoardEffects } from './store/boards.effects';
-import { boardsReducer } from './store/boards.reducer';
 
 @NgModule({
   declarations: [BoardsComponent, CreateBoardDialogComponent],
   imports: [
-    BoardsRoutingModule,
     CommonModule,
     MatCardModule,
     RouterModule,
@@ -36,8 +30,6 @@ import { boardsReducer } from './store/boards.reducer';
     MatProgressBarModule,
     MatSnackBarModule,
     MatSelectModule,
-    StoreModule.forFeature('boards', boardsReducer),
-    EffectsModule.forFeature([BoardEffects]),
   ],
   exports: [BoardsComponent],
 })

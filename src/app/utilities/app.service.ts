@@ -25,7 +25,7 @@ export class AppService {
     // );
   }
 
-  public openDialog(dialogType: DialogType): void {
+  public openDialog(dialogType: DialogType, data?: {}): void {
     let component: ComponentType<any>;
     switch (dialogType) {
       case DialogType.Login:
@@ -44,6 +44,7 @@ export class AppService {
 
     this.dialog.open(component, {
       width: '450px',
+      data: data,
     });
   }
 

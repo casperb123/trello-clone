@@ -1,5 +1,5 @@
 <form (ngSubmit)="onSubmit()">
-  <h1 mat-dialog-title>Log in</h1>
+  <h1 mat-dialog-title>Login</h1>
   <div class="content" [formGroup]="form">
     <mat-progress-bar
       mode="indeterminate"
@@ -25,6 +25,7 @@
         <mat-label>Password</mat-label>
         <input
           matInput
+          type="password"
           placeholder="Enter your password"
           formControlName="password"
         />

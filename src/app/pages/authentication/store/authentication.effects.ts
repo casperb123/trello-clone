@@ -7,7 +7,6 @@ import { AuthResponse } from 'src/app/pages/authentication/utilities/authenticat
 import { User } from 'src/app/pages/authentication/utilities/authentication.models';
 import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
 import { environment } from 'src/environments/environment';
-import { resetBoards } from '../../boards/store/boards.actions';
 import * as actions from './authentication.actions';
 
 @Injectable()
@@ -56,18 +55,6 @@ export class AuthenticationEffects {
             )
           )
       )
-    )
-  );
-
-  logout$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(actions.logout),
-      map(() => {
-        localStorage.removeItem('userData');
-        this.router.navigate(['']);
-
-        return resetBoards();
-      })
     )
   );
 }

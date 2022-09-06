@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { exhaustMap, filter, map, Observable } from 'rxjs';
 import { AuthenticationService } from '../../authentication/utilities/authentication.service';
 import { WorkspacesFacade } from '../store/workspaces.facade';
-import { Workspace } from '../workspace/utilities/workspace.interfaces';
+import { Workspace } from '../workspace/utilities/workspace.models';
 import { CreateWorkspaceResponse } from './workspaces.interfaces';
 
 @Injectable({
@@ -31,7 +31,9 @@ export class WorkspacesService {
   public getWorkspaces(): Observable<Workspace[]> {
     return this.authService.getUserLoggedIn().pipe(
       filter((user) => !!user && !!user.token),
-      exhaustMap(() => this.workspacesFacade.getWorkspaces())
+      exhaustMap((user) =>
+        this.workspacesFacade.getWorkspaces(!!user && !!user.token)
+      )
     );
   }
 
