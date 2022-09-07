@@ -7,17 +7,19 @@
       [routerLinkActiveOptions]="{ exact: true }"
       >Home</a
     >
-    <button type="button" mat-button [matMenuTriggerFor]="workspacesMenu">
-      Workspaces
-    </button>
-    <mat-menu #workspacesMenu>
-      <a
-        *ngFor="let workspace of workspaces$ | async"
-        mat-menu-item
-        [routerLink]="['/workspaces', workspace.id]"
-        >{{ workspace.title }}</a
-      >
-    </mat-menu>
+    <div *ngIf="(workspaces$ | async)?.length > 0">
+      <button type="button" mat-button [matMenuTriggerFor]="workspacesMenu">
+        Workspaces
+      </button>
+      <mat-menu #workspacesMenu>
+        <a
+          *ngFor="let workspace of workspaces$ | async"
+          mat-menu-item
+          [routerLink]="['/workspaces', workspace.id]"
+          >{{ workspace.title }}</a
+        >
+      </mat-menu>
+    </div>
   </section>
   <ng-template #notLoggedIn>
     <section>
