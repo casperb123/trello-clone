@@ -1,4 +1,4 @@
-import { Board } from 'src/app/pages/boards/board/utilities/board.models';
+import { Board } from 'src/app/modules/boards/board/utilities/board.models';
 
 export class Workspace {
   constructor(

@@ -1,4 +1,4 @@
-import { Workspace } from 'src/app/pages/workspaces/workspace/utilities/workspace.models';
+import { Workspace } from 'src/app/modules/workspaces/workspace/utilities/workspace.models';
 
 export class Board {
   public workspace: Workspace;

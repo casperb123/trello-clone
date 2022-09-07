@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of } from 'rxjs';
-import { AuthResponse } from 'src/app/pages/authentication/utilities/authentication.interfaces';
-import { User } from 'src/app/pages/authentication/utilities/authentication.models';
-import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
+import { AuthResponse } from 'src/app/modules/authentication/utilities/authentication.interfaces';
+import { User } from 'src/app/modules/authentication/utilities/authentication.models';
+import { AuthenticationService } from 'src/app/modules/authentication/utilities/authentication.service';
 import { environment } from 'src/environments/environment';
 import * as actions from './authentication.actions';
 

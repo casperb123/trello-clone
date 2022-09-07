@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/pages/authentication/utilities/authentication.models';
-import { AuthenticationService } from 'src/app/pages/authentication/utilities/authentication.service';
-import { WorkspacesService } from 'src/app/pages/workspaces/utilities/workspaces.service';
-import { Workspace } from 'src/app/pages/workspaces/workspace/utilities/workspace.models';
+import { User } from 'src/app/modules/authentication/utilities/authentication.models';
+import { AuthenticationService } from 'src/app/modules/authentication/utilities/authentication.service';
+import { WorkspacesService } from 'src/app/modules/workspaces/utilities/workspaces.service';
+import { Workspace } from 'src/app/modules/workspaces/workspace/utilities/workspace.models';
 import { DialogType } from 'src/app/utilities/app.enums';
 import { AppService } from 'src/app/utilities/app.service';
 

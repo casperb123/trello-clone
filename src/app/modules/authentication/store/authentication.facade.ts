@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/pages/authentication/utilities/authentication.models';
+import { User } from 'src/app/modules/authentication/utilities/authentication.models';
 import * as actions from './authentication.actions';
 import { State } from './authentication.reducer';
 import * as selectors from './authentication.selectors';

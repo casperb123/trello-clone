@@ -8,7 +8,7 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { Workspace } from 'src/app/pages/workspaces/workspace/utilities/workspace.models';
+import { Workspace } from 'src/app/modules/workspaces/workspace/utilities/workspace.models';
 import { ControlType } from 'src/app/utilities/app.enums';
 import { AppService } from 'src/app/utilities/app.service';
 import { Color } from '../../board/utilities/board.enums';

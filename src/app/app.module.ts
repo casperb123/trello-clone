@@ -14,9 +14,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { AuthenticationModule } from './pages/authentication/authentication.module';
-import { BoardsModule } from './pages/boards/boards.module';
-import { LandingModule } from './pages/home/landing.module';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
+import { BoardsModule } from './modules/boards/boards.module';
+import { LandingModule } from './modules/home/landing.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, NavigationComponent],
