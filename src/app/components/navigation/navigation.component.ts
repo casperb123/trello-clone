@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/modules/authentication/utilities/authentication.models';
 import { AuthenticationService } from 'src/app/modules/authentication/utilities/authentication.service';
-import { WorkspacesService } from 'src/app/modules/workspaces/utilities/workspaces.service';
-import { Workspace } from 'src/app/modules/workspaces/workspace/utilities/workspace.models';
+import { Workspace } from 'src/app/modules/workspace/utilities/workspace.models';
+import { WorkspaceService } from 'src/app/modules/workspace/utilities/workspace.service';
 import { DialogType } from 'src/app/utilities/app.enums';
 import { AppService } from 'src/app/utilities/app.service';
 
@@ -19,13 +19,13 @@ export class NavigationComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    private workspacesService: WorkspacesService,
+    private workspaceService: WorkspaceService,
     public appService: AppService
   ) {}
 
   ngOnInit(): void {
     this.user$ = this.authService.getUserLoggedIn();
-    this.workspaces$ = this.workspacesService.getWorkspaces();
+    this.workspaces$ = this.workspaceService.getWorkspaces();
   }
 
   public logout(): void {

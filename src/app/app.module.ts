@@ -15,8 +15,9 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
-import { BoardsModule } from './modules/boards/boards.module';
-import { LandingModule } from './modules/home/landing.module';
+import { BoardModule } from './modules/board/board.module';
+import { HomeModule } from './modules/home/home.module';
+import { WorkspaceModule } from './modules/workspace/workspace.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, NavigationComponent],
@@ -24,8 +25,9 @@ import { LandingModule } from './modules/home/landing.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LandingModule,
-    BoardsModule,
+    HomeModule,
+    BoardModule,
+    WorkspaceModule,
     MatToolbarModule,
     MatButtonModule,
     HttpClientModule,

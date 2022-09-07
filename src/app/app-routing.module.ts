@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticateGuard } from './modules/authentication/utilities/authenticate.guard';
-import { BoardComponent } from './modules/boards/board/board.component';
-import { HomeComponent } from './modules/home/home.component';
-import { WorkspaceComponent } from './modules/workspaces/workspace/workspace.component';
-import { WorkspacesComponent } from './modules/workspaces/workspaces.component';
+import { BoardComponent } from './modules/board/pages/board/board.component';
+import { HomeComponent } from './modules/home/pages/home.component';
+import { WorkspaceComponent } from './modules/workspace/pages/workspace/workspace.component';
+import { WorkspacesComponent } from './modules/workspace/pages/workspaces/workspaces.component';
 
 let routes: Routes = [
   {
