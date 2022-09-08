@@ -49,7 +49,7 @@ export class BoardService {
       exhaustMap((user) =>
         this.http
           .post<CreateResponse>(
-            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/workspace/${workspace.id}/boards.json`,
+            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/workspaces/${workspace.id}/boards.json`,
             {
               workspaceId: workspace.id,
               title: title,
