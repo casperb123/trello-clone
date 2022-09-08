@@ -1,6 +1,4 @@
 export enum DialogType {
-  'Login',
-  'Register',
   'CreateWorkspace',
   'CreateBoard',
 }

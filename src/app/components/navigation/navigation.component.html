@@ -27,7 +27,7 @@
     </section>
   </ng-template>
 
-  <section *ngIf="user$ | async; else login">
+  <section *ngIf="user$ | async; else authenticate">
     <button mat-button [matMenuTriggerFor]="logoutMenu">
       {{ (user$ | async).email }}
     </button>
@@ -35,22 +35,14 @@
       <button type="button" mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
   </section>
-  <ng-template #login>
+  <ng-template #authenticate>
     <section>
-      <button
-        type="button"
-        mat-button
-        (click)="appService.openDialog(dialogType.Login)"
-      >
+      <a mat-button routerLink="/login" routerLinkActive="active-link">
         Login
-      </button>
-      <button
-        type="button"
-        mat-button
-        (click)="appService.openDialog(dialogType.Register)"
-      >
+      </a>
+      <a mat-button routerLink="/register" routerLinkActive="active-link">
         Register
-      </button>
+      </a>
     </section>
   </ng-template>
 </nav>

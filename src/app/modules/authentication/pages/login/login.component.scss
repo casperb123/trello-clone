@@ -1,0 +1,22 @@
+.wrapper {
+  max-width: 400px;
+  margin: auto;
+
+  .title {
+    margin-bottom: 24px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .error-message {
+      margin-bottom: 5px;
+    }
+  }
+
+  .actions {
+    margin: 0;
+  }
+}

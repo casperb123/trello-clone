@@ -1,28 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { filter, Observable, Subscription, tap } from 'rxjs';
-import { ControlType, DialogType } from 'src/app/utilities/app.enums';
+import { Observable } from 'rxjs';
+import { ControlType } from 'src/app/utilities/app.enums';
 import { AppService } from 'src/app/utilities/app.service';
 import { AuthenticationService } from '../../utilities/authentication.service';
 
 @Component({
-  selector: 'app-login-dialog',
-  templateUrl: './login-dialog.component.html',
-  styleUrls: ['./login-dialog.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginDialogComponent implements OnInit, OnDestroy {
-  private loggedInSub: Subscription;
-
+export class LoginComponent implements OnInit {
   public form: FormGroup;
   public controlType = ControlType;
   public isLoggingIn$: Observable<boolean>;
-  public isLoggedIn$: Observable<boolean>;
   public loginError$: Observable<string>;
 
   public get email(): AbstractControl {
@@ -36,9 +32,8 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private dialogRef: MatDialogRef<LoginDialogComponent>,
-    public appService: AppService,
-    public authService: AuthenticationService
+    private authService: AuthenticationService,
+    public appService: AppService
   ) {}
 
   ngOnInit(): void {
@@ -51,24 +46,8 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
       rememberMe: new FormControl(false),
     });
 
-    this.isLoggingIn$ = this.authService.getIsLoggingIn().pipe(
-      tap((isLoggingIn) => {
-        this.dialogRef.disableClose = isLoggingIn;
-      })
-    );
+    this.isLoggingIn$ = this.authService.getIsLoggingIn();
     this.loginError$ = this.authService.getLoginError();
-
-    this.loggedInSub = this.authService
-      .getUserLoggedIn()
-      .pipe(filter((user) => !!user))
-      .subscribe(() => {
-        this.dialogRef.close();
-      });
-  }
-
-  public openRegisterDialog(): void {
-    this.dialogRef.close();
-    this.appService.openDialog(DialogType.Register);
   }
 
   public onSubmit(): void {
@@ -81,11 +60,5 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
       this.password.value,
       this.rememberMe.value
     );
-  }
-
-  ngOnDestroy(): void {
-    if (this.loggedInSub) {
-      this.loggedInSub.unsubscribe();
-    }
   }
 }
