@@ -1,6 +1,18 @@
 .toolbar {
-  display: grid;
-  grid-template-columns: min-content auto;
-  gap: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
   height: 56px;
+
+  &-section {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .dark-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 }

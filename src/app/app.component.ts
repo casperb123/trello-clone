@@ -14,6 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly darkClassName = 'dark-theme';
 
   public title = 'trello-clone';
+  public darkMode: boolean;
 
   @HostBinding('class') className = '';
 
@@ -24,6 +25,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    const darkMode: boolean = JSON.parse(localStorage.getItem('darkMode'));
+    this.toggleDarkMode(darkMode);
+
     this.authService.autoLogin();
     this.loggedInSub = this.authService
       .getUserLoggedIn()
@@ -45,7 +49,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public toggleDarkMode(enabled: boolean): void {
     this.className = enabled ? this.darkClassName : '';
-    this.overlay.getContainerElement().classList.toggle(this.darkClassName);
+    if (enabled) {
+      this.overlay.getContainerElement().classList.add(this.darkClassName);
+    } else {
+      this.overlay.getContainerElement().classList.remove(this.darkClassName);
+    }
     localStorage.setItem('darkMode', `${enabled}`);
   }
 }

@@ -3,14 +3,36 @@
   flex-direction: column;
   height: 100vh;
 
+  .sidenav-container {
+    overflow-y: auto;
+    height: 100%;
+
+    .sidenav {
+      padding: 16px;
+      width: 300px;
+
+      @media screen and (max-width: 500px) {
+        width: 100%;
+      }
+    }
+
+    .sidenav-trigger {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 10px;
+    }
+  }
+
   .content-wrapper {
     overflow-y: auto;
-    padding: 24px;
+    height: 100vh;
 
     .content {
       max-width: 1128px;
       min-width: 260px;
       margin: auto;
+      padding: 24px;
     }
   }
 }

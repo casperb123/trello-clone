@@ -1,57 +1,66 @@
-<nav class="nav-bar">
-  <div class="nav-section">
-    <div *ngIf="user$ | async; else notLoggedIn">
+<nav class="navigation">
+  <div class="navigation-section" *ngIf="user$ | async; else notLoggedIn">
+    <a
+      mat-button
+      class="button"
+      routerLink="/workspaces"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Workspaces</a
+    >
+    <mat-expansion-panel class="workspaces-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Workspaces</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="workspaces">
+        <a
+          *ngFor="let workspace of workspaces$ | async"
+          mat-button
+          class="button"
+          [routerLink]="['/workspaces', workspace.id]"
+          >{{ workspace.title }}</a
+        >
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <ng-template #notLoggedIn>
+    <div class="navigation-section">
       <a
         mat-button
-        routerLink="/workspaces"
+        class="button"
+        routerLink="/home"
         routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
         >Home</a
       >
-      <div *ngIf="(workspaces$ | async)?.length > 0">
-        <button type="button" mat-button [matMenuTriggerFor]="workspacesMenu">
-          Workspaces
-        </button>
-        <mat-menu #workspacesMenu>
-          <a
-            *ngFor="let workspace of workspaces$ | async"
-            mat-menu-item
-            [routerLink]="['/workspaces', workspace.id]"
-            >{{ workspace.title }}</a
-          >
-        </mat-menu>
-      </div>
     </div>
-    <ng-template #notLoggedIn>
-      <div>
-        <a mat-button routerLink="/home" routerLinkActive="active-link">Home</a>
-      </div>
+  </ng-template>
+  <div class="navigation-section">
+    <button
+      type="button"
+      mat-button
+      class="button"
+      *ngIf="user$ | async; else authMenu"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+    <ng-template #authMenu>
+      <a
+        mat-button
+        class="button"
+        routerLink="/login"
+        routerLinkActive="active-link"
+      >
+        Login
+      </a>
+      <a
+        mat-button
+        class="button"
+        routerLink="/register"
+        routerLinkActive="active-link"
+      >
+        Register
+      </a>
     </ng-template>
-  </div>
-
-  <div class="nav-section">
-    <div *ngIf="user$ | async; else authenticate">
-      <button mat-button [matMenuTriggerFor]="logoutMenu">
-        {{ (user$ | async).email }}
-      </button>
-      <mat-menu #logoutMenu>
-        <button type="button" mat-menu-item (click)="logout()">Logout</button>
-      </mat-menu>
-    </div>
-    <ng-template #authenticate>
-      <div>
-        <a mat-button routerLink="/login" routerLinkActive="active-link">
-          Login
-        </a>
-        <a mat-button routerLink="/register" routerLinkActive="active-link">
-          Register
-        </a>
-      </div>
-    </ng-template>
-    <div class="dark-toggle">
-      <mat-icon>brightness_5</mat-icon>
-      <mat-slide-toggle [formControl]="toggleControl"></mat-slide-toggle>
-      <mat-icon>bedtime</mat-icon>
-    </div>
   </div>
 </nav>

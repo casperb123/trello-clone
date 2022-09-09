@@ -1,4 +1,21 @@
 <mat-toolbar class="toolbar" color="primary">
-  <span>Trello Clone</span>
-  <app-navigation (darkMode)="toggleDarkMode($event)"></app-navigation>
+  <div class="toolbar-section">
+    <button
+      type="button"
+      class="sidenav-button"
+      mat-icon-button
+      (click)="openSideNav()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Trello Clone</span>
+  </div>
+
+  <div class="toolbar-section">
+    <div class="dark-toggle">
+      <mat-icon>brightness_5</mat-icon>
+      <mat-slide-toggle [formControl]="darkModeToggle"></mat-slide-toggle>
+      <mat-icon>bedtime</mat-icon>
+    </div>
+  </div>
 </mat-toolbar>
