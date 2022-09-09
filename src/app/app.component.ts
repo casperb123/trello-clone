@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { AuthenticationService } from './modules/authentication/utilities/authentication.service';
@@ -10,12 +11,16 @@ import { AuthenticationService } from './modules/authentication/utilities/authen
 })
 export class AppComponent implements OnInit, OnDestroy {
   private loggedInSub: Subscription;
+  private readonly darkClassName = 'dark-theme';
 
   public title = 'trello-clone';
 
+  @HostBinding('class') className = '';
+
   constructor(
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private overlay: OverlayContainer
   ) {}
 
   ngOnInit(): void {
@@ -36,5 +41,11 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.loggedInSub) {
       this.loggedInSub.unsubscribe();
     }
+  }
+
+  public toggleDarkMode(enabled: boolean): void {
+    this.className = enabled ? this.darkClassName : '';
+    this.overlay.getContainerElement().classList.toggle(this.darkClassName);
+    localStorage.setItem('darkMode', `${enabled}`);
   }
 }

@@ -2,8 +2,19 @@
   display: flex;
   justify-content: space-between;
 
-  section {
+  .nav-section {
     display: flex;
+    align-items: center;
+
+    > div {
+      display: flex;
+    }
+  }
+
+  .dark-toggle {
+    margin-left: 20px;
+    display: flex;
+    gap: 10px;
   }
 }
 
