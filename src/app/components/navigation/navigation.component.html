@@ -1,66 +1,70 @@
-<nav class="navigation">
-  <div class="navigation-section" *ngIf="user$ | async; else notLoggedIn">
-    <a
-      mat-button
-      class="button"
-      routerLink="/workspaces"
-      routerLinkActive="active-link"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Workspaces</a
-    >
-    <mat-expansion-panel class="workspaces-panel">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Workspaces</mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="workspaces">
-        <a
-          *ngFor="let workspace of workspaces$ | async"
-          mat-button
-          class="button"
-          [routerLink]="['/workspaces', workspace.id]"
-          >{{ workspace.title }}</a
-        >
-      </div>
-    </mat-expansion-panel>
-  </div>
-  <ng-template #notLoggedIn>
-    <div class="navigation-section">
-      <a
-        mat-button
-        class="button"
-        routerLink="/home"
-        routerLinkActive="active-link"
-        >Home</a
-      >
-    </div>
-  </ng-template>
-  <div class="navigation-section">
+<div class="navigation-wrapper">
+  <mat-toolbar class="navigation-header" color="primary">
     <button
       type="button"
-      mat-button
-      class="button"
-      *ngIf="user$ | async; else authMenu"
-      (click)="logout()"
+      class="sidenav-button"
+      mat-icon-button
+      (click)="closeSideNav()"
     >
-      Logout
+      <mat-icon>menu</mat-icon>
     </button>
-    <ng-template #authMenu>
+    <span>Trello Clone</span>
+  </mat-toolbar>
+  <nav class="navigation">
+    <div class="navigation-section" *ngIf="user$ | async; else notLoggedIn">
       <a
-        mat-button
+        mat-raised-button
+        color="primary"
         class="button"
-        routerLink="/login"
+        routerLink="/workspaces"
         routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Workspaces</a
       >
-        Login
-      </a>
-      <a
-        mat-button
-        class="button"
-        routerLink="/register"
-        routerLinkActive="active-link"
-      >
-        Register
-      </a>
+    </div>
+    <ng-template #notLoggedIn>
+      <div class="navigation-section">
+        <a
+          mat-raised-button
+          color="primary"
+          class="button"
+          routerLink="/home"
+          routerLinkActive="active-link"
+          >Home</a
+        >
+      </div>
     </ng-template>
-  </div>
-</nav>
+    <div class="navigation-section">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        class="button"
+        *ngIf="user$ | async; else authMenu"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+      <ng-template #authMenu>
+        <a
+          mat-raised-button
+          color="primary"
+          class="button"
+          routerLink="/login"
+          routerLinkActive="active-link"
+        >
+          Login
+        </a>
+        <a
+          mat-raised-button
+          color="primary"
+          class="button"
+          routerLink="/register"
+          routerLinkActive="active-link"
+        >
+          Register
+        </a>
+      </ng-template>
+    </div>
+  </nav>
+</div>

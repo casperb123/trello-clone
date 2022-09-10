@@ -1,25 +1,24 @@
 <div class="wrapper mat-app-background">
-  <app-header
-    (darkMode)="toggleDarkMode($event)"
-    (sideNav)="drawer.toggle()"
-  ></app-header>
-  <div class="content-wrapper">
-    <mat-drawer-container class="sidenav-container" hasBackdrop="false">
-      <mat-drawer
-        #drawer
-        mode="over"
-        class="sidenav"
-        autoFocus="false"
-        (mouseleave)="drawer.close()"
-      >
-        <app-navigation></app-navigation>
-      </mat-drawer>
-      <mat-drawer-content>
+  <mat-drawer-container class="sidenav-container" hasBackdrop="false">
+    <mat-drawer
+      #drawer
+      mode="over"
+      class="sidenav"
+      autoFocus="false"
+      (mouseleave)="drawer.close()"
+      ><app-navigation (sideNavClose)="drawer.close()"></app-navigation
+    ></mat-drawer>
+    <mat-drawer-content class="drawer-content">
+      <div class="content-wrapper">
         <div class="sidenav-trigger" (mouseenter)="drawer.open()"></div>
+        <app-header
+          (darkMode)="toggleDarkMode($event)"
+          (sideNav)="drawer.toggle()"
+        ></app-header>
         <div class="content">
           <router-outlet></router-outlet>
         </div>
-      </mat-drawer-content>
-    </mat-drawer-container>
-  </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>

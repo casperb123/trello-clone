@@ -1,4 +1,7 @@
 .toolbar {
+  position: fixed;
+  z-index: 100;
+  top: 0;
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -6,7 +9,7 @@
 
   &-section {
     display: flex;
-    gap: 16px;
+    gap: 5px;
     align-items: center;
   }
 

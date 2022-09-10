@@ -1,26 +1,39 @@
-.navigation {
-  display: flex;
+.navigation-wrapper {
   height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: min-content auto;
 
-  &-section {
+  .navigation-header {
     display: flex;
-    align-items: center;
+    height: 56px;
+    gap: 5px;
+  }
+
+  .navigation {
+    display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
 
-    .workspaces {
+    &-section {
       display: flex;
+      align-items: center;
       flex-direction: column;
-    }
+      gap: 10px;
 
-    .button {
-      width: 100%;
-      padding: 8px 16px;
-    }
+      .workspaces {
+        display: flex;
+        flex-direction: column;
+      }
 
-    .workspaces-panel {
-      width: 100%;
+      .button {
+        width: 100%;
+        padding: 8px 16px;
+      }
+
+      .workspaces-panel {
+        width: 100%;
+      }
     }
   }
 }
