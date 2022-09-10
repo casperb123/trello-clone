@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -44,6 +45,7 @@ import { WorkspaceModule } from './modules/workspace/workspace.module';
     MatSidenavModule,
     MatListModule,
     MatExpansionModule,
+    MatTooltipModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument(),
