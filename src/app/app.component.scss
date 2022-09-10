@@ -1,33 +1,24 @@
-.wrapper {
-  .sidenav-container {
-    .sidenav {
-      width: 300px;
-      position: fixed;
+.drawer {
+  width: 300px;
+  position: fixed;
 
-      @media screen and (max-width: 500px) {
-        width: 100%;
-      }
-    }
-
-    .sidenav-trigger {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 10px;
-      z-index: 200;
-    }
-
-    .drawer-content {
-      height: 100vh;
-    }
+  @media screen and (max-width: 500px) {
+    width: 100%;
   }
+}
 
-  .content-wrapper {
-    .content {
-      max-width: 1128px;
-      min-width: 260px;
-      margin: auto;
-      padding: 24px;
-    }
-  }
+.drawer-trigger {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  z-index: 200;
+}
+
+.content {
+  max-width: 1128px;
+  min-width: 260px;
+  margin: auto;
+  padding: 24px;
+  margin-top: 56px;
 }
