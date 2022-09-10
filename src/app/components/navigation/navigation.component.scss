@@ -5,8 +5,24 @@
 
   .navigation-header {
     display: flex;
+    justify-content: space-between;
     height: 56px;
-    gap: 5px;
+
+    &-section {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      .dark-toggle {
+        display: none;
+
+        @media screen and (max-width: 500px) {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+      }
+    }
   }
 
   .navigation {

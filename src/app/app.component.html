@@ -6,14 +6,17 @@
       class="sidenav"
       autoFocus="false"
       (mouseleave)="drawer.close()"
-      ><app-navigation (sideNavClose)="drawer.close()"></app-navigation
+      ><app-navigation
+        (sideNavClose)="drawer.close()"
+        (darkMode)="toggleDarkMode($event)"
+      ></app-navigation
     ></mat-drawer>
     <mat-drawer-content class="drawer-content">
       <div class="content-wrapper">
         <div class="sidenav-trigger" (mouseenter)="drawer.open()"></div>
         <app-header
           (darkMode)="toggleDarkMode($event)"
-          (sideNav)="drawer.toggle()"
+          (sideNavOpen)="drawer.open()"
         ></app-header>
         <div class="content">
           <router-outlet></router-outlet>

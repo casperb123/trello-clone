@@ -1,14 +1,23 @@
 <div class="navigation-wrapper">
   <mat-toolbar class="navigation-header" color="primary">
-    <button
-      type="button"
-      class="sidenav-button"
-      mat-icon-button
-      (click)="closeSideNav()"
-    >
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>Trello Clone</span>
+    <section class="navigation-header-section">
+      <button
+        type="button"
+        class="sidenav-button"
+        mat-icon-button
+        (click)="closeSideNav()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Trello Clone</span>
+    </section>
+    <section class="navigation-header-section">
+      <div class="dark-toggle">
+        <mat-icon>brightness_5</mat-icon>
+        <mat-slide-toggle [formControl]="darkModeToggle"></mat-slide-toggle>
+        <mat-icon>bedtime</mat-icon>
+      </div>
+    </section>
   </mat-toolbar>
   <nav class="navigation">
     <div class="navigation-section" *ngIf="user$ | async; else notLoggedIn">
