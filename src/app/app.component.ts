@@ -33,10 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .getUserLoggedIn()
       .pipe(filter((user) => !!user && !!user.token))
       .subscribe((user) => {
-        if (user.rememberMe) {
-          localStorage.setItem('userData', JSON.stringify(user));
-        }
-
+        localStorage.setItem('userData', JSON.stringify(user));
         this.router.navigate(['/workspaces']);
       });
   }

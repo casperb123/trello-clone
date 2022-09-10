@@ -108,28 +108,26 @@ export class AuthenticationService {
       userData.rememberMe
     );
 
-    if (user.rememberMe) {
-      if (user.token) {
-        this.authFacade.autoLogin(user);
-      } else {
-        this.refreshToken(user.refreshToken)
-          .pipe(take(1))
-          .subscribe({
-            next: (response) => {
-              this.loginSuccess(
-                user.email,
-                user.id,
-                response.id_token,
-                response.refresh_token,
-                response.expires_in,
-                user.rememberMe
-              );
-            },
-            error: () => {
-              this.logout();
-            },
-          });
-      }
+    if (user.token) {
+      this.authFacade.autoLogin(user);
+    } else if (user.rememberMe) {
+      this.refreshToken(user.refreshToken)
+        .pipe(take(1))
+        .subscribe({
+          next: (response) => {
+            this.loginSuccess(
+              user.email,
+              user.id,
+              response.id_token,
+              response.refresh_token,
+              response.expires_in,
+              user.rememberMe
+            );
+          },
+          error: () => {
+            this.logout();
+          },
+        });
     }
   }
 

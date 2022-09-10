@@ -29,9 +29,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public get password(): AbstractControl {
     return this.form.get('password');
   }
-  public get rememberMe(): AbstractControl {
-    return this.form.get('rememberMe');
-  }
 
   constructor(
     private authService: AuthenticationService,
@@ -45,7 +42,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(6),
       ]),
-      rememberMe: new FormControl(false),
     });
   }
 
@@ -67,7 +63,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             response.idToken,
             response.refreshToken,
             response.expiresIn,
-            this.rememberMe.value
+            false
           );
         },
         error: (error: string) => {
