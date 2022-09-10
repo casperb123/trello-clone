@@ -1,11 +1,13 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDrawer } from '@angular/material/sidenav';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/modules/authentication/utilities/authentication.models';
 import { AuthenticationService } from 'src/app/modules/authentication/utilities/authentication.service';
@@ -23,6 +25,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
   public user$: Observable<User>;
   public workspaces$: Observable<Workspace[]>;
   public darkModeToggle: FormControl;
+
+  @Input()
+  public drawer: MatDrawer;
 
   @Output()
   public sideNavClose: EventEmitter<void> = new EventEmitter();
@@ -50,6 +55,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   public closeSideNav(): void {
     this.sideNavClose.emit();
+  }
+
+  public closeDrawer(): void {
+    if (window.innerWidth <= 500) {
+      this.drawer.close();
+    }
   }
 
   public logout(): void {

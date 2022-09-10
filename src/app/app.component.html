@@ -7,6 +7,7 @@
       autoFocus="false"
       (mouseleave)="drawer.close()"
       ><app-navigation
+        [drawer]="drawer"
         (sideNavClose)="drawer.close()"
         (darkMode)="toggleDarkMode($event)"
       ></app-navigation

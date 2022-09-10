@@ -28,6 +28,7 @@
         routerLink="/workspaces"
         routerLinkActive="active-link"
         [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeDrawer()"
         >Workspaces</a
       >
     </div>
@@ -39,6 +40,7 @@
           class="button"
           routerLink="/home"
           routerLinkActive="active-link"
+          (click)="closeDrawer()"
           >Home</a
         >
       </div>
@@ -61,6 +63,7 @@
           class="button"
           routerLink="/login"
           routerLinkActive="active-link"
+          (click)="closeDrawer()"
         >
           Login
         </a>
@@ -70,6 +73,7 @@
           class="button"
           routerLink="/register"
           routerLinkActive="active-link"
+          (click)="closeDrawer()"
         >
           Register
         </a>
