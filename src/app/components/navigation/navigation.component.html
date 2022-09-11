@@ -1,85 +1,61 @@
-<div class="navigation-wrapper">
-  <mat-toolbar class="navigation-header" color="primary">
-    <section class="navigation-header-section">
-      <button
-        type="button"
-        class="sidenav-button"
-        mat-icon-button
-        matTooltip="Close Navigation Menu"
-        aria-label="Close Navigation Menu"
-        (click)="closeSideNav()"
-      >
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Trello Clone</span>
-    </section>
-    <section class="navigation-header-section">
-      <div class="dark-toggle">
-        <mat-icon>brightness_5</mat-icon>
-        <mat-slide-toggle [formControl]="darkModeToggle"></mat-slide-toggle>
-        <mat-icon>bedtime</mat-icon>
-      </div>
-    </section>
-  </mat-toolbar>
-  <nav class="navigation">
-    <div class="navigation-section" *ngIf="user$ | async; else notLoggedIn">
+<nav class="navigation">
+  <div class="navigation-section" *ngIf="user$ | async; else notLoggedIn">
+    <a
+      mat-raised-button
+      color="primary"
+      class="button"
+      routerLink="/workspaces"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeDrawer()"
+      >Workspaces</a
+    >
+  </div>
+  <ng-template #notLoggedIn>
+    <div class="navigation-section">
       <a
         mat-raised-button
         color="primary"
         class="button"
-        routerLink="/workspaces"
+        routerLink="/home"
         routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: true }"
         (click)="closeDrawer()"
-        >Workspaces</a
+        >Home</a
       >
     </div>
-    <ng-template #notLoggedIn>
-      <div class="navigation-section">
-        <a
-          mat-raised-button
-          color="primary"
-          class="button"
-          routerLink="/home"
-          routerLinkActive="active-link"
-          (click)="closeDrawer()"
-          >Home</a
-        >
-      </div>
-    </ng-template>
-    <div class="navigation-section">
-      <button
-        type="button"
+  </ng-template>
+  <div class="navigation-section">
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      class="button"
+      *ngIf="user$ | async; else authMenu"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+    <ng-template #authMenu>
+      <a
         mat-raised-button
         color="primary"
         class="button"
-        *ngIf="user$ | async; else authMenu"
-        (click)="logout()"
+        routerLink="/login"
+        routerLinkActive="active-link"
+        (click)="closeDrawer()"
       >
-        Logout
-      </button>
-      <ng-template #authMenu>
-        <a
-          mat-raised-button
-          color="primary"
-          class="button"
-          routerLink="/login"
-          routerLinkActive="active-link"
-          (click)="closeDrawer()"
-        >
-          Login
-        </a>
-        <a
-          mat-raised-button
-          color="primary"
-          class="button"
-          routerLink="/register"
-          routerLinkActive="active-link"
-          (click)="closeDrawer()"
-        >
-          Register
-        </a>
-      </ng-template>
-    </div>
-  </nav>
-</div>
+        Login
+      </a>
+      <a
+        mat-raised-button
+        color="primary"
+        class="button"
+        routerLink="/register"
+        routerLinkActive="active-link"
+        (click)="closeDrawer()"
+      >
+        Register
+      </a>
+    </ng-template>
+  </div>
+</nav>

@@ -1,24 +1,35 @@
-.drawer {
-  width: 300px;
+.header {
   position: fixed;
-
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
-}
-
-.drawer-trigger {
-  position: absolute;
+  height: 56px;
+  z-index: 100;
+  width: 100%;
   top: 0;
-  bottom: 0;
-  width: 10px;
-  z-index: 200;
 }
 
-.content {
-  max-width: 1128px;
-  min-width: 260px;
-  margin: auto;
-  padding: 24px;
+.drawer-container {
   margin-top: 56px;
+
+  .drawer {
+    position: fixed;
+    top: 56px;
+    width: 300px;
+
+    @media screen and (max-width: 500px) {
+      width: 100%;
+    }
+  }
+
+  .drawer-trigger {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+  }
+
+  .content {
+    max-width: 1128px;
+    min-width: 260px;
+    padding: 24px;
+    margin: auto;
+  }
 }

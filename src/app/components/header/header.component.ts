@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Output()
   public darkMode: EventEmitter<boolean> = new EventEmitter();
   @Output()
-  public sideNavOpen: EventEmitter<void> = new EventEmitter();
+  public drawerToggle: EventEmitter<void> = new EventEmitter();
 
   constructor(private authService: AuthenticationService) {}
 
@@ -41,8 +41,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
 
-  public openSideNav(): void {
-    this.sideNavOpen.emit();
+  public toggleDrawer(): void {
+    this.drawerToggle.emit();
   }
 
   public logout(): void {

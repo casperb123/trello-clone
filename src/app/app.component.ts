@@ -62,6 +62,14 @@ export class AppComponent implements OnInit, OnDestroy {
     localStorage.setItem('darkMode', `${enabled}`);
   }
 
+  public toggleDrawer(): void {
+    if (this.drawer.opened) {
+      this.closeDrawer();
+    } else {
+      this.openDrawer();
+    }
+  }
+
   public openDrawer(): void {
     if (
       window.innerWidth <= 500 &&
