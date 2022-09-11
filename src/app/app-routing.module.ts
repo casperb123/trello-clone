@@ -8,7 +8,7 @@ import { HomeComponent } from './modules/home/pages/home.component';
 import { WorkspaceComponent } from './modules/workspace/pages/workspace/workspace.component';
 import { WorkspacesComponent } from './modules/workspace/pages/workspaces/workspaces.component';
 
-let routes: Routes = [
+const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
