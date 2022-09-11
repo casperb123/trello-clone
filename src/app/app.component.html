@@ -1,3 +1,4 @@
+<div class="drawer-trigger" (mouseenter)="openDrawer()"></div>
 <mat-drawer-container class="mat-app-background" hasBackdrop="false">
   <mat-drawer
     #drawer
@@ -16,7 +17,6 @@
       (darkMode)="toggleDarkMode($event)"
       (sideNavOpen)="openDrawer()"
     ></app-header>
-    <div class="drawer-trigger" (mouseenter)="openDrawer()"></div>
     <div class="content">
       <router-outlet></router-outlet>
     </div>

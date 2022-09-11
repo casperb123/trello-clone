@@ -1,11 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import {
-  Component,
-  HostBinding,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -23,8 +17,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public title = 'trello-clone';
   public darkMode: boolean;
-
-  @HostBinding('class') className = '';
 
   @ViewChild('drawer')
   public drawer: MatDrawer;
@@ -56,12 +48,16 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public toggleDarkMode(enabled: boolean): void {
-    this.className = enabled ? this.darkClassName : '';
+    const containerClassList = this.overlay.getContainerElement().classList;
+
     if (enabled) {
-      this.overlay.getContainerElement().classList.add(this.darkClassName);
+      containerClassList.add(this.darkClassName);
+      this.htmlClassList.add(this.darkClassName);
     } else {
-      this.overlay.getContainerElement().classList.remove(this.darkClassName);
+      containerClassList.remove(this.darkClassName);
+      this.htmlClassList.remove(this.darkClassName);
     }
+
     localStorage.setItem('darkMode', `${enabled}`);
   }
 
