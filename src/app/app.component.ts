@@ -14,6 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private loggedInSub: Subscription;
   private readonly darkClassName = 'dark-theme';
   private readonly htmlClassList = document.documentElement.classList;
+  private readonly bodyClassList = document.body.classList;
 
   public title = 'trello-clone';
   public darkMode: boolean;
@@ -52,10 +53,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (enabled) {
       containerClassList.add(this.darkClassName);
-      this.htmlClassList.add(this.darkClassName);
+      this.bodyClassList.add(this.darkClassName);
     } else {
       containerClassList.remove(this.darkClassName);
-      this.htmlClassList.remove(this.darkClassName);
+      this.bodyClassList.remove(this.darkClassName);
     }
 
     localStorage.setItem('darkMode', `${enabled}`);
