@@ -21,9 +21,11 @@
         <mat-panel-title>
           {{ workspace.title }}
         </mat-panel-title>
-        <mat-panel-description>
-          {{ workspace.description }}
-        </mat-panel-description>
+        <div class="actions">
+          <a mat-raised-button color="primary" [routerLink]="[workspace.id]"
+            >Open</a
+          >
+        </div>
       </mat-expansion-panel-header>
       <app-boards [workspace]="workspace"></app-boards>
     </mat-expansion-panel>
