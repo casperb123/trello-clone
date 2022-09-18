@@ -1,10 +1,22 @@
 .toolbar {
   position: fixed;
+  top: 0;
+  left: 56px;
   z-index: 100;
   height: 56px;
+  width: calc(100% - 56px);
   display: flex;
   justify-content: space-between;
   gap: 16px;
+
+  .menu-button {
+    transition: transform 0.25s;
+    transform: scaleX(-1);
+
+    .open {
+      transform: scaleX(1);
+    }
+  }
 
   &-section {
     display: flex;

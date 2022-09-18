@@ -1,61 +1,81 @@
-<nav class="navigation">
-  <div class="navigation-section" *ngIf="user$ | async; else notLoggedIn">
-    <a
-      mat-raised-button
-      color="primary"
-      class="button"
-      routerLink="/workspaces"
-      routerLinkActive="active-link"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeDrawer()"
-      >Workspaces</a
-    >
-  </div>
-  <ng-template #notLoggedIn>
-    <div class="navigation-section">
-      <a
-        mat-raised-button
-        color="primary"
-        class="button"
-        routerLink="/home"
-        routerLinkActive="active-link"
-        (click)="closeDrawer()"
-        >Home</a
-      >
-    </div>
-  </ng-template>
-  <div class="navigation-section">
+<mat-card
+  class="card"
+  [class.open]="navigationOpen"
+  (mouseenter)="openNavigation()"
+  (mouseleave)="closeNavigation()"
+>
+  <mat-card-title class="card-title">
     <button
       type="button"
-      mat-raised-button
-      color="primary"
-      class="button"
-      *ngIf="user$ | async; else authMenu"
-      (click)="logout()"
+      class="card-title-button"
+      [class.open]="navigationOpen"
+      mat-button
+      disableRipple
+      matTooltip="Toggle Navigation Menu"
+      aria-label="Toggle Navigation Menu"
+      (click)="toggleNavigation()"
     >
-      Logout
+      <mat-icon [class.open]="navigationOpen">menu_open</mat-icon>
     </button>
-    <ng-template #authMenu>
-      <a
-        mat-raised-button
-        color="primary"
-        class="button"
-        routerLink="/login"
-        routerLinkActive="active-link"
-        (click)="closeDrawer()"
-      >
-        Login
-      </a>
-      <a
-        mat-raised-button
-        color="primary"
-        class="button"
-        routerLink="/register"
-        routerLinkActive="active-link"
-        (click)="closeDrawer()"
-      >
-        Register
-      </a>
-    </ng-template>
-  </div>
-</nav>
+  </mat-card-title>
+  <mat-card-content class="card-content">
+    <mat-nav-list class="nav-list">
+      <section class="nav-list-section">
+        <mat-divider></mat-divider>
+        <a
+          mat-button
+          class="nav-list-item"
+          routerLink="/workspaces"
+          *ngIf="isLoggedIn$ | async; else notLoggedIn"
+        >
+          <div class="nav-list-item-content">
+            <mat-icon>workspaces</mat-icon>
+            <span [class.show]="navigationOpen">Workspaces</span>
+          </div>
+          <mat-divider></mat-divider>
+        </a>
+        <ng-template #notLoggedIn>
+          <a mat-button class="nav-list-item" routerLink="/home">
+            <div class="nav-list-item-content">
+              <mat-icon>home</mat-icon>
+              <span [class.show]="navigationOpen">Home</span>
+            </div>
+            <mat-divider></mat-divider>
+          </a>
+        </ng-template>
+      </section>
+      <section class="nav-list-section">
+        <mat-divider></mat-divider>
+        <button
+          type="button"
+          mat-button
+          class="nav-list-item"
+          (click)="logout()"
+          *ngIf="isLoggedIn$ | async; else authFields"
+        >
+          <div class="nav-list-item-content">
+            <mat-icon>logout</mat-icon>
+            <span [class.show]="navigationOpen">Logout</span>
+          </div>
+          <mat-divider></mat-divider>
+        </button>
+        <ng-template #authFields>
+          <a mat-button class="nav-list-item" routerLink="/login">
+            <div class="nav-list-item-content">
+              <mat-icon>login</mat-icon>
+              <span [class.show]="navigationOpen">Login</span>
+            </div>
+            <mat-divider></mat-divider>
+          </a>
+          <a mat-button class="nav-list-item" routerLink="/register">
+            <div class="nav-list-item-content">
+              <mat-icon>person_add</mat-icon>
+              <span [class.show]="navigationOpen">Register</span>
+            </div>
+            <mat-divider></mat-divider>
+          </a>
+        </ng-template>
+      </section>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>

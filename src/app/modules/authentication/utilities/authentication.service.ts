@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { catchError, filter, map, Observable, take, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationFacade } from '../store/authentication.facade';
@@ -16,12 +16,10 @@ import { User } from './authentication.models';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private logoutTimer: any;
-
   constructor(
     private http: HttpClient,
     private authFacade: AuthenticationFacade,
-    private snackBar: MatSnackBar
+    private router: Router
   ) {}
 
   public handleAuthError(error: HttpErrorResponse): string {
@@ -140,7 +138,7 @@ export class AuthenticationService {
       )
       .subscribe(() => {
         localStorage.removeItem('userData');
-        window.location.reload();
+        this.router.navigate(['/home']);
       });
   }
 

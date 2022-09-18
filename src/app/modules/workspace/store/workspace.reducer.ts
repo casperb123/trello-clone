@@ -40,6 +40,11 @@ export const workspaceReducer = createReducer(
     loading: false,
     loadingError: action.error,
   })),
+  on(actions.unloadWorkspaces, () =>
+    adapter.removeAll({
+      ...initialState,
+    })
+  ),
   on(actions.addWorkspace, (state, action) =>
     adapter.addOne(action.workspace, {
       ...state,

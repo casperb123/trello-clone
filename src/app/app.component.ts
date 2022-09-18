@@ -1,9 +1,9 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from './modules/authentication/utilities/authentication.service';
+import { WorkspaceService } from './modules/workspace/utilities/workspace.service';
 
 @Component({
   selector: 'app-root',
@@ -13,17 +13,15 @@ import { AuthenticationService } from './modules/authentication/utilities/authen
 export class AppComponent implements OnInit, OnDestroy {
   private loggedInSub: Subscription;
   private readonly darkClassName = 'dark-theme';
-  private readonly htmlClassList = document.documentElement.classList;
   private readonly bodyClassList = document.body.classList;
+  private loggedIn: boolean;
 
   public title = 'trello-clone';
   public darkMode: boolean;
 
-  @ViewChild('drawer')
-  public drawer: MatDrawer;
-
   constructor(
     private authService: AuthenticationService,
+    private workspaceService: WorkspaceService,
     private router: Router,
     private overlay: OverlayContainer
   ) {}
@@ -33,13 +31,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.toggleDarkMode(darkMode);
 
     this.authService.autoLogin();
-    this.loggedInSub = this.authService
-      .getUserLoggedIn()
-      .pipe(filter((user) => !!user && !!user.token))
-      .subscribe((user) => {
+    this.loggedInSub = this.authService.getUserLoggedIn().subscribe((user) => {
+      if (!!user && !!user.token) {
         localStorage.setItem('userData', JSON.stringify(user));
         this.router.navigate(['/workspaces']);
-      });
+        this.loggedIn = true;
+      } else if (this.loggedIn) {
+        this.workspaceService.unloadWorkspaces();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -60,32 +60,5 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     localStorage.setItem('darkMode', `${enabled}`);
-  }
-
-  public toggleDrawer(): void {
-    if (this.drawer.opened) {
-      this.closeDrawer();
-    } else {
-      this.openDrawer();
-    }
-  }
-
-  public openDrawer(): void {
-    if (
-      window.innerWidth <= 500 &&
-      !this.htmlClassList.contains('cdk-global-scrollblock')
-    ) {
-      this.htmlClassList.add('cdk-global-scrollblock');
-    }
-
-    this.drawer.open();
-  }
-
-  public closeDrawer(): void {
-    if (window.innerWidth <= 500) {
-      this.htmlClassList.remove('cdk-global-scrollblock');
-    }
-
-    this.drawer.close();
   }
 }

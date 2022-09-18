@@ -1,25 +1,5 @@
-<app-header
-  (darkMode)="toggleDarkMode($event)"
-  (drawerToggle)="toggleDrawer()"
-  class="header"
-></app-header>
-<mat-drawer-container class="drawer-container" hasBackdrop="false">
-  <mat-drawer
-    #drawer
-    mode="over"
-    class="drawer"
-    autoFocus="false"
-    (mouseleave)="closeDrawer()"
-    ><app-navigation
-      [drawer]="drawer"
-      (sideNavClose)="closeDrawer()"
-      (darkMode)="toggleDarkMode($event)"
-    ></app-navigation
-  ></mat-drawer>
-  <mat-drawer-content>
-    <div class="drawer-trigger" (mouseenter)="openDrawer()"></div>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-drawer-content>
-</mat-drawer-container>
+<app-header (darkMode)="toggleDarkMode($event)" class="header"></app-header>
+<app-navigation></app-navigation>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

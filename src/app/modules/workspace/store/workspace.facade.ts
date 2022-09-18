@@ -70,4 +70,8 @@ export class WorkspaceFacade {
   public deleteWorkspace(workspaceId: string): void {
     this.store$.dispatch(actions.deleteWorkspace({ workspaceId: workspaceId }));
   }
+
+  public unloadWorkspaces(): void {
+    this.store$.dispatch(actions.unloadWorkspaces());
+  }
 }

@@ -1,5 +1,4 @@
 @use "@angular/material" as mat;
-
 @include mat.core();
 
 $primary: mat.define-palette(mat.$indigo-palette);
@@ -30,5 +29,5 @@ $dark-theme: mat.define-dark-theme(
 @include mat.all-component-themes($light-theme);
 
 .dark-theme {
-  @include mat.all-component-colors($dark-theme);
+  @include mat.all-component-themes($dark-theme);
 }

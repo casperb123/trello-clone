@@ -14,6 +14,8 @@ export const loadWorkspacesError = createAction(
   props<{ error: any }>()
 );
 
+export const unloadWorkspaces = createAction('[Workspaces] Unload Workspaces');
+
 export const addWorkspace = createAction(
   '[Workspaces] Add Workspace',
   props<{ workspace: Workspace }>()

@@ -23,8 +23,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output()
   public darkMode: EventEmitter<boolean> = new EventEmitter();
-  @Output()
-  public drawerToggle: EventEmitter<void> = new EventEmitter();
 
   constructor(private authService: AuthenticationService) {}
 
@@ -39,14 +37,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.darkMode.emit(enabled);
       }
     );
-  }
-
-  public toggleDrawer(): void {
-    this.drawerToggle.emit();
-  }
-
-  public logout(): void {
-    this.authService.logout();
   }
 
   ngOnDestroy(): void {

@@ -79,4 +79,8 @@ export class WorkspaceService {
   public deleteWorkspace(workspaceId: string): void {
     this.workspaceFacade.deleteWorkspace(workspaceId);
   }
+
+  public unloadWorkspaces(): void {
+    this.workspaceFacade.unloadWorkspaces();
+  }
 }

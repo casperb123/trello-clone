@@ -1,35 +1,8 @@
-.header {
-  position: fixed;
-  height: 56px;
-  z-index: 100;
-  width: 100%;
-  top: 0;
-}
-
-.drawer-container {
-  top: 56px;
-
-  .drawer {
-    position: fixed;
-    top: 56px;
-    width: 300px;
-
-    @media screen and (max-width: 500px) {
-      width: 100%;
-    }
-  }
-
-  .drawer-trigger {
-    position: fixed;
-    top: 56px;
-    bottom: 0;
-    width: 10px;
-  }
-
-  .content {
-    max-width: 1128px;
-    min-width: 260px;
-    padding: 24px;
-    margin: auto;
-  }
+.content {
+  max-width: 1128px;
+  min-width: 260px;
+  padding: 24px;
+  padding-top: calc(56px + 24px);
+  padding-left: calc(56px + 24px);
+  margin: auto;
 }
