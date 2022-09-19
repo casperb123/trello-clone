@@ -14,8 +14,9 @@ export class AppComponent implements OnInit, OnDestroy {
   private loggedInSub: Subscription;
   private readonly darkClassName = 'dark-theme';
   private readonly bodyClassList = document.body.classList;
-  private readonly htmlClassList = document.documentElement.classList;
+  private readonly htmlElement = document.documentElement;
   private loggedIn: boolean;
+  private scrollTop: number;
 
   public title = 'trello-clone';
   public darkMode: boolean;
@@ -69,11 +70,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (window.innerWidth <= 500) {
       if (open) {
-        if (!this.htmlClassList.contains('cdk-global-scrollblock')) {
-          this.htmlClassList.add('cdk-global-scrollblock');
+        this.scrollTop = this.htmlElement.scrollTop;
+
+        if (!this.htmlElement.classList.contains('scrollblock')) {
+          this.htmlElement.classList.add('scrollblock');
+          this.htmlElement.style.top = `-${this.scrollTop}px`;
         }
       } else {
-        this.htmlClassList.remove('cdk-global-scrollblock');
+        this.htmlElement.classList.remove('scrollblock');
+        this.htmlElement.style.top = null;
+        this.htmlElement.scrollTo({ top: this.scrollTop });
       }
     }
   }
