@@ -1,5 +1,13 @@
-<app-header (darkMode)="toggleDarkMode($event)" class="header"></app-header>
-<app-navigation></app-navigation>
+<app-header
+  class="header"
+  [navigationOpen]="navigationOpen"
+  (darkMode)="toggleDarkMode($event)"
+  (navigationToggle)="toggleNavigation($event)"
+></app-header>
+<app-navigation
+  [navigationOpen]="navigationOpen"
+  (navigationToggle)="toggleNavigation($event)"
+></app-navigation>
 <div class="content">
   <router-outlet></router-outlet>
 </div>

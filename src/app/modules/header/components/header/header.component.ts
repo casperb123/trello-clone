@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -21,8 +22,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public user$: Observable<User>;
   public darkModeToggle: FormControl;
 
+  @Input()
+  public navigationOpen: boolean;
+
   @Output()
   public darkMode: EventEmitter<boolean> = new EventEmitter();
+  @Output()
+  public navigationToggle: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private authService: AuthenticationService) {}
 
@@ -43,5 +49,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.darkModeToggleSub) {
       this.darkModeToggleSub.unsubscribe();
     }
+  }
+
+  public toggleNavigation(open: boolean = !this.navigationOpen): void {
+    this.navigationToggle.emit(open);
   }
 }

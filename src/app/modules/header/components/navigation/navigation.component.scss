@@ -1,10 +1,10 @@
 .card {
   position: fixed;
-  top: 0;
+  top: 56px;
   bottom: 0;
   padding: 0;
   width: 56px;
-  transition: width 0.25s;
+  transition: width 0.25s, margin-left 0.25s;
   z-index: 200;
   border-radius: 0;
 
@@ -12,31 +12,16 @@
     width: 300px;
   }
 
-  &-title {
-    margin: 0;
-    height: 56px;
-    display: flex;
+  @media screen and (max-width: 500px) {
+    margin-left: -56px;
 
-    &-button {
-      min-width: 0;
-      height: 100%;
-      width: 100%;
-      text-align: left;
-
-      mat-icon {
-        flex-shrink: 0;
-        transform: scaleX(-1);
-        transition: transform 0.25s;
-
-        &.open {
-          transform: scaleX(1);
-        }
-      }
+    &.open {
+      margin-left: 0;
     }
   }
 
   &-content {
-    height: calc(100% - 56px);
+    height: 100%;
 
     .nav-list {
       display: flex;

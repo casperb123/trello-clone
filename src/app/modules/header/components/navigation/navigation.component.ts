@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/modules/authentication/utilities/authentication.service';
 
@@ -8,8 +8,13 @@ import { AuthenticationService } from 'src/app/modules/authentication/utilities/
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
-  public navigationOpen: boolean;
   public isLoggedIn$: Observable<boolean>;
+
+  @Input()
+  public navigationOpen: boolean;
+
+  @Output()
+  public navigationToggle: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private authService: AuthenticationService) {}
 
@@ -19,16 +24,12 @@ export class NavigationComponent implements OnInit {
       .pipe(map((user) => !!user && !!user.token));
   }
 
-  public toggleNavigation(): void {
-    this.navigationOpen = !this.navigationOpen;
-  }
-
   public openNavigation(): void {
-    this.navigationOpen = true;
+    this.navigationToggle.emit(true);
   }
 
   public closeNavigation(): void {
-    this.navigationOpen = false;
+    this.navigationToggle.emit(false);
   }
 
   public logout(): void {

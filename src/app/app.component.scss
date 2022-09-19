@@ -5,4 +5,9 @@
   padding-top: calc(56px + 24px);
   padding-left: calc(56px + 24px);
   margin: auto;
+  transition: padding-left 0.25s;
+
+  @media screen and (max-width: 500px) {
+    padding-left: 24px;
+  }
 }

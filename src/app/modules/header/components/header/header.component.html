@@ -1,5 +1,19 @@
 <mat-toolbar class="toolbar" color="primary">
   <div class="toolbar-section">
+    <div class="navigation">
+      <button
+        type="button"
+        class="menu-button"
+        mat-button
+        disableRipple
+        matTooltip="Toggle Navigation Menu"
+        aria-label="Toggle Navigation Menu"
+        (click)="toggleNavigation()"
+      >
+        <mat-icon [class.open]="navigationOpen">menu_open</mat-icon>
+      </button>
+      <mat-divider vertical="true" class="navigation-divider"></mat-divider>
+    </div>
     <span>Trello Clone</span>
   </div>
 

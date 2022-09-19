@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public title = 'trello-clone';
   public darkMode: boolean;
+  public navigationOpen: boolean;
 
   constructor(
     private authService: AuthenticationService,
@@ -60,5 +61,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     localStorage.setItem('darkMode', `${enabled}`);
+  }
+
+  public toggleNavigation(open: boolean): void {
+    this.navigationOpen = open;
   }
 }

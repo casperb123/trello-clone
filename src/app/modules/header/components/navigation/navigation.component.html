@@ -4,20 +4,6 @@
   (mouseenter)="openNavigation()"
   (mouseleave)="closeNavigation()"
 >
-  <mat-card-title class="card-title">
-    <button
-      type="button"
-      class="card-title-button"
-      [class.open]="navigationOpen"
-      mat-button
-      disableRipple
-      matTooltip="Toggle Navigation Menu"
-      aria-label="Toggle Navigation Menu"
-      (click)="toggleNavigation()"
-    >
-      <mat-icon [class.open]="navigationOpen">menu_open</mat-icon>
-    </button>
-  </mat-card-title>
   <mat-card-content class="card-content">
     <mat-nav-list class="nav-list">
       <section class="nav-list-section">
