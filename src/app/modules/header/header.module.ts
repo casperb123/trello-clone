@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -26,6 +27,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     MatIconModule,
     MatListModule,
     MatDividerModule,
+    MatTooltipModule,
   ],
   exports: [HeaderComponent, NavigationComponent],
 })
