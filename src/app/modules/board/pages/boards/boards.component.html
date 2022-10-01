@@ -1,15 +1,21 @@
-<ul class="list">
-  <li *ngFor="let board of workspace.boards" class="list-item">
+<mat-grid-list [cols]="gridColumns" rowHeight="90px" gutterSize="20px">
+  <mat-grid-tile *ngFor="let board of workspace.boards" class="list-item">
     <a
       mat-stroked-button
       [routerLink]="[workspace.id, board.id]"
       [ngStyle]="{ 'background-color': getColor(board) }"
+      class="list-item"
       >{{ board.title }}</a
     >
-  </li>
-  <li class="list-item add-board">
-    <button type="button" mat-stroked-button (click)="openCreateBoardDialog()">
+  </mat-grid-tile>
+  <mat-grid-tile class="list-item">
+    <button
+      type="button"
+      class="add-board"
+      mat-stroked-button
+      (click)="openCreateBoardDialog()"
+    >
       Create new board
     </button>
-  </li>
-</ul>
+  </mat-grid-tile>
+</mat-grid-list>
