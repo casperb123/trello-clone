@@ -16,12 +16,24 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   list-style: none;
   margin: 0;
   padding: 0;
 
-  .actions {
-    margin-right: 20px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    &-buttons {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
   }
+}
+
+.divider {
+  margin-bottom: 16px;
 }

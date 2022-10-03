@@ -16,18 +16,15 @@
 </div>
 <ul class="list">
   <li *ngFor="let workspace of workspaces$ | async" class="list-item">
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ workspace.title }}
-        </mat-panel-title>
-        <div class="actions">
-          <a mat-raised-button color="primary" [routerLink]="[workspace.id]"
-            >Open</a
-          >
-        </div>
-      </mat-expansion-panel-header>
-      <app-boards [workspace]="workspace"></app-boards>
-    </mat-expansion-panel>
+    <div class="header">
+      <h2>{{ workspace.title }}</h2>
+      <div class="header-buttons">
+        <a mat-raised-button color="primary" [routerLink]="[workspace.id]">
+          Boards
+        </a>
+      </div>
+    </div>
+    <mat-divider class="divider"></mat-divider>
+    <app-boards [workspace]="workspace"></app-boards>
   </li>
 </ul>
