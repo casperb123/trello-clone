@@ -15,11 +15,11 @@ import { Board } from '../../utilities/board.models';
 export class BoardsComponent implements OnInit, OnDestroy {
   private bpoSub: Subscription;
   private breakpoints = {
-    ['(max-width: 420px)']: 1,
-    ['(max-width: 640px)']: 2,
-    ['(max-width: 810px)']: 3,
-    ['(max-width: 960px)']: 4,
-    ['(min-width: 961px)']: 5,
+    ['(max-width: 380px)']: 1,
+    ['(max-width: 590px)']: 2,
+    ['(max-width: 770px)']: 3,
+    ['(max-width: 940px)']: 4,
+    ['(min-width: 941px)']: 5,
   };
 
   public dialogType = DialogType;

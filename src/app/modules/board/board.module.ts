@@ -12,9 +12,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
+import { BoardsComponent } from './components/boards/boards.component';
 import { CreateBoardDialogComponent } from './components/create-board-dialog/create-board-dialog.component';
 import { BoardComponent } from './pages/board/board.component';
-import { BoardsComponent } from './pages/boards/boards.component';
 
 @NgModule({
   declarations: [BoardsComponent, BoardComponent, CreateBoardDialogComponent],
