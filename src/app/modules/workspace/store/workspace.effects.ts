@@ -39,15 +39,10 @@ export class WorkspaceEffects {
 
               const workspacesArray: Workspace[] = Object.keys(response).map(
                 (workspaceId) => {
-                  const boards = this.boardService.getBoards(
-                    response[workspaceId].boards,
-                    workspaceId
-                  );
                   const workspace = new Workspace(
                     workspaceId,
                     response[workspaceId].title,
-                    response[workspaceId].description,
-                    boards
+                    response[workspaceId].description
                   );
                   return workspace;
                 }

@@ -62,7 +62,7 @@ export class CreateBoardDialogComponent implements OnInit, OnDestroy {
 
     this.createBoardSub = this.boardService
       .createBoard(
-        this.data.workspace,
+        this.data.workspace.id,
         this.title.value,
         this.backgroundColor.value
       )

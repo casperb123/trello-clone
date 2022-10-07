@@ -11,13 +11,15 @@ import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
+  private INTERCEPT_URLS = ['workspaces', 'boards'];
+
   constructor(private authService: AuthenticationService) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!request.url.includes('workspaces')) {
+    if (!this.INTERCEPT_URLS.find((url) => request.url.includes(url))) {
       return next.handle(request);
     }
 

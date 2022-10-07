@@ -12,9 +12,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { BoardsComponent } from './components/boards/boards.component';
 import { CreateBoardDialogComponent } from './components/create-board-dialog/create-board-dialog.component';
 import { BoardComponent } from './pages/board/board.component';
+import { BoardEffects } from './store/board.effects';
+import { boardReducer } from './store/board.reducer';
 
 @NgModule({
   declarations: [BoardsComponent, BoardComponent, CreateBoardDialogComponent],
@@ -33,6 +37,8 @@ import { BoardComponent } from './pages/board/board.component';
     MatSelectModule,
     MatGridListModule,
     LayoutModule,
+    StoreModule.forFeature('boards', boardReducer),
+    EffectsModule.forFeature([BoardEffects]),
   ],
   exports: [BoardsComponent],
 })

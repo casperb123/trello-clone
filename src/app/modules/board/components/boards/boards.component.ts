@@ -1,11 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Workspace } from 'src/app/modules/workspace/utilities/workspace.models';
 import { DialogType } from 'src/app/utilities/app.enums';
 import { AppService } from 'src/app/utilities/app.service';
 import { Color } from '../../utilities/board.enums';
 import { Board } from '../../utilities/board.models';
+import { BoardService } from '../../utilities/board.service';
 
 @Component({
   selector: 'app-boards',
@@ -24,11 +25,16 @@ export class BoardsComponent implements OnInit, OnDestroy {
 
   public dialogType = DialogType;
   public gridColumns = 5;
+  public boards$: Observable<Board[]>;
 
   @Input()
   public workspace: Workspace;
 
-  constructor(public appService: AppService, private bpo: BreakpointObserver) {}
+  constructor(
+    public appService: AppService,
+    private bpo: BreakpointObserver,
+    private boardService: BoardService
+  ) {}
 
   ngOnInit(): void {
     this.bpoSub = this.bpo
@@ -39,6 +45,8 @@ export class BoardsComponent implements OnInit, OnDestroy {
         );
         this.gridColumns = this.breakpoints[active];
       });
+
+    this.boards$ = this.boardService.getBoardsInWorkspace(this.workspace.id);
   }
 
   public openCreateBoardDialog(): void {

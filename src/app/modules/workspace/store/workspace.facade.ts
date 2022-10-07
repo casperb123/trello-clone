@@ -58,7 +58,7 @@ export class WorkspaceFacade {
       id: workspace.id,
       changes: {
         title: workspace.title,
-        boards: workspace.boards,
+        description: workspace.description,
       },
     };
 

@@ -20,10 +20,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const params = this.route.snapshot.paramMap;
-    const workspaceId = params.get('workspaceId');
-    const boardId = params.get('boardId');
+    const boardId = params.get('id');
 
-    this.board$ = this.boardService.getBoardById(boardId, workspaceId);
+    this.board$ = this.boardService.getBoardById(boardId);
   }
 
   ngOnDestroy(): void {

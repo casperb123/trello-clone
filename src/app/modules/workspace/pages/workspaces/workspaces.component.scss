@@ -1,15 +1,11 @@
-.title-wrapper {
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 50px;
 
-  .title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-
-    h1 {
-      margin: 0;
-    }
+  h1 {
+    margin: 0;
   }
 }
 

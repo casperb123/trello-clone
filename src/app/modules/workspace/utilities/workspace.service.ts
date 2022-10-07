@@ -62,7 +62,6 @@ export class WorkspaceService {
                 id: response.name,
                 title: title,
                 description: description,
-                boards: [],
               };
               this.workspaceFacade.addWorkspace(workspace);
               return workspace;

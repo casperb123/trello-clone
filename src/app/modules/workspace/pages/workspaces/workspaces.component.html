@@ -1,25 +1,26 @@
-<div class="title-wrapper">
-  <div class="title">
-    <h1>Your Workspaces</h1>
-    <button
-      type="button"
-      mat-mini-fab
-      color="primary"
-      aria-label="Create workspace"
-      matTooltip="Create Workspace"
-      (click)="openCreateWorkspaceDialog()"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
-  <mat-divider></mat-divider>
+<div class="title">
+  <h1>Your Workspaces</h1>
+  <button
+    type="button"
+    mat-mini-fab
+    color="primary"
+    aria-label="Create workspace"
+    matTooltip="Create Workspace"
+    (click)="openCreateWorkspaceDialog()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 <ul class="list">
   <li *ngFor="let workspace of workspaces$ | async" class="list-item">
     <div class="header">
       <h2>{{ workspace.title }}</h2>
       <div class="header-buttons">
-        <a mat-raised-button color="primary" [routerLink]="[workspace.id]">
+        <a
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/w', workspace.id]"
+        >
           Boards
         </a>
       </div>

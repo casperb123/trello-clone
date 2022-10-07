@@ -32,12 +32,12 @@ const routes: Routes = [
     canActivate: [AuthenticateGuard],
   },
   {
-    path: 'workspaces/:id',
+    path: 'w/:id',
     component: WorkspaceComponent,
     canActivate: [AuthenticateGuard],
   },
   {
-    path: 'workspaces/:workspaceId/:boardId',
+    path: 'b/:id',
     component: BoardComponent,
     canActivate: [AuthenticateGuard],
   },

@@ -1,8 +1,8 @@
 <mat-grid-list [cols]="gridColumns" rowHeight="90px" gutterSize="20px">
-  <mat-grid-tile *ngFor="let board of workspace.boards" class="list-item">
+  <mat-grid-tile *ngFor="let board of boards$ | async" class="list-item">
     <a
       mat-stroked-button
-      [routerLink]="[workspace.id, board.id]"
+      [routerLink]="['/b', board.id]"
       [ngStyle]="{ 'background-color': getColor(board) }"
       class="list-item"
       >{{ board.title }}</a
