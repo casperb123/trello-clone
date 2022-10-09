@@ -11,7 +11,7 @@ import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-  private INTERCEPT_URLS = ['workspaces', 'boards'];
+  private readonly INTERCEPT_URLS = ['workspaces', 'boards'];
 
   constructor(private authService: AuthenticationService) {}
 

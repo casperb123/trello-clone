@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { HeaderModule } from './modules/header/header.module';
+import { HomeModule } from './modules/home/home.module';
 import { WorkspaceModule } from './modules/workspace/workspace.module';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { WorkspaceModule } from './modules/workspace/workspace.module';
     MatSidenavModule,
     HeaderModule,
     WorkspaceModule,
+    HomeModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument(),

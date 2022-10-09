@@ -19,12 +19,25 @@
               placeholder="Enter your email"
               formControlName="email"
             />
-            <mat-error
-              *ngIf="email.invalid && (email.dirty || email.touched)"
-              >{{
-                appService.getFormValidationError(email, controlType.Email)
-              }}</mat-error
-            >
+            <mat-error *ngIf="email.invalid">{{
+              appService.getFormValidationError(email, controlType.Email)
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Display Name</mat-label>
+            <input
+              matInput
+              placeholder="Enter a display name"
+              formControlName="displayName"
+            />
+            <mat-error *ngIf="displayName.invalid">
+              {{
+                appService.getFormValidationError(
+                  displayName,
+                  controlType.DisplayName
+                )
+              }}
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Password</mat-label>
@@ -34,15 +47,9 @@
               placeholder="Enter your password"
               formControlName="password"
             />
-            <mat-error
-              *ngIf="password.invalid && (password.dirty || password.touched)"
-              >{{
-                appService.getFormValidationError(
-                  password,
-                  controlType.Password
-                )
-              }}</mat-error
-            >
+            <mat-error *ngIf="password.invalid">{{
+              appService.getFormValidationError(password, controlType.Password)
+            }}</mat-error>
           </mat-form-field>
         </ng-template>
       </div>

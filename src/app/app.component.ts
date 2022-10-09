@@ -1,7 +1,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { AuthenticationService } from './modules/authentication/utilities/authentication.service';
 import { WorkspaceService } from './modules/workspace/utilities/workspace.service';
 
@@ -15,7 +15,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly darkClassName = 'dark-theme';
   private readonly bodyClassList = document.body.classList;
   private readonly htmlElement = document.documentElement;
-  private loggedIn: boolean;
   private scrollTop: number;
 
   public title = 'trello-clone';
@@ -34,15 +33,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.toggleDarkMode(darkMode);
 
     this.authService.autoLogin();
-    this.loggedInSub = this.authService.getUserLoggedIn().subscribe((user) => {
-      if (!!user && !!user.token) {
+    this.loggedInSub = this.authService
+      .getUserLoggedIn()
+      .pipe(filter((user) => !!user && !!user.token))
+      .subscribe((user) => {
         localStorage.setItem('userData', JSON.stringify(user));
-        this.router.navigate(['/workspaces']);
-        this.loggedIn = true;
-      } else if (this.loggedIn) {
-        this.workspaceService.unloadWorkspaces();
-      }
-    });
+      });
   }
 
   ngOnDestroy(): void {

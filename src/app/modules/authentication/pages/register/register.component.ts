@@ -26,6 +26,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public get email(): AbstractControl {
     return this.form.get('email');
   }
+  public get displayName(): AbstractControl {
+    return this.form.get('displayName');
+  }
   public get password(): AbstractControl {
     return this.form.get('password');
   }
@@ -38,6 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
+      displayName: new FormControl('', [Validators.required]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -54,12 +58,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.errorMessage = null;
 
     this.registerSub = this.authService
-      .register(this.email.value, this.password.value)
+      .register(this.email.value, this.displayName.value, this.password.value)
       .subscribe({
         next: (response) => {
+          console.log('register response', response);
           this.authService.loginSuccess(
-            response.email,
             response.localId,
+            response.email,
             response.idToken,
             response.refreshToken,
             response.expiresIn,

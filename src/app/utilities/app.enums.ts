@@ -5,6 +5,7 @@ export enum DialogType {
 
 export enum ControlType {
   Email = 'email',
+  DisplayName = 'display name',
   Password = 'password',
   Title = 'title',
   Description = 'description',

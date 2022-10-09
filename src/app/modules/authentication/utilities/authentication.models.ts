@@ -1,11 +1,15 @@
 export class User {
   constructor(
-    public email: string,
     public id: string,
+    public email: string,
     private _token: string,
     public refreshToken: string,
     public tokenExpirationDate: Date,
-    public rememberMe: boolean
+    public rememberMe: boolean,
+    public emailVerified?: boolean,
+    public displayName?: string,
+    public photoUrl?: string,
+    public passwordUpdatedAt?: number
   ) {}
 
   public get token(): string {
@@ -15,4 +19,13 @@ export class User {
 
     return this._token;
   }
+}
+
+export class UserData {
+  constructor(
+    public displayName: string,
+    public emailVerified?: boolean,
+    public photoUrl?: string,
+    public passwordUpdatedAt?: string
+  ) {}
 }

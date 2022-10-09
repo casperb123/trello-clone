@@ -1,1 +1,14 @@
-<h1 class="title">Please login or register to begin creating workspaces</h1>
+<div
+  *ngIf="isLoggedIn && userData$ | async; else notLoggedIn"
+  class="title-wrapper"
+>
+  <h1 class="title">
+    Welcome to my Trello Clone, {{ (userData$ | async).displayName }}
+  </h1>
+</div>
+
+<ng-template #notLoggedIn>
+  <div class="title-wrapper">
+    <h1 class="title">Please login or register to begin creating workspaces</h1>
+  </div>
+</ng-template>

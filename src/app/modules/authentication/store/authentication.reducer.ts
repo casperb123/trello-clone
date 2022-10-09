@@ -1,40 +1,81 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/modules/authentication/utilities/authentication.models';
+import {
+  User,
+  UserData,
+} from 'src/app/modules/authentication/utilities/authentication.models';
 import * as actions from './authentication.actions';
 
 export interface State {
-  loggingIn: boolean;
+  loading: boolean;
   userLoggedIn: User;
-  loginError: string;
+  error: string;
+  userData: {
+    loading: boolean;
+    userData: UserData;
+    error: any;
+  };
 }
 
 export const initialState: State = {
+  loading: false,
   userLoggedIn: null,
-  loggingIn: false,
-  loginError: null,
+  error: null,
+  userData: {
+    loading: false,
+    userData: null,
+    error: null,
+  },
 };
 
 export const authenticationReducer = createReducer(
   initialState,
   on(actions.login, (state) => ({
     ...state,
-    loggingIn: true,
-    loginError: null,
+    loading: true,
+    error: null,
   })),
   on(actions.loginSuccess, (state, action) => ({
     ...state,
     userLoggedIn: action.user,
-    loggingIn: false,
+    loading: false,
   })),
   on(actions.loginError, (state, action) => ({
     ...state,
-    loggingIn: false,
-    loginError: action.error,
+    loading: false,
+    error: action.error,
   })),
-  on(actions.logout, (state) => ({
+  on(actions.loadUserData, (state) => ({
     ...state,
-    userLoggedIn: null,
-    loggingIn: false,
-    loginError: null,
+    userData: {
+      ...state.userData,
+      loading: true,
+      error: null,
+    },
+  })),
+  on(actions.loadUserDataSuccess, (state, action) => ({
+    ...state,
+    userData: {
+      ...state.userData,
+      userData: action.userData,
+      loading: false,
+    },
+  })),
+  on(actions.loadUserDataError, (state, action) => ({
+    ...state,
+    userData: {
+      ...state.userData,
+      loading: false,
+      error: action.error,
+    },
+  })),
+  on(actions.updateUserData, (state, action) => ({
+    ...state,
+    userData: {
+      ...state.userData,
+      userData: action.userData,
+    },
+  })),
+  on(actions.logout, () => ({
+    ...initialState,
   }))
 );

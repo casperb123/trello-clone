@@ -3,10 +3,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of } from 'rxjs';
-import { AuthResponse } from 'src/app/modules/authentication/utilities/authentication.interfaces';
-import { User } from 'src/app/modules/authentication/utilities/authentication.models';
+import {
+  User,
+  UserData,
+} from 'src/app/modules/authentication/utilities/authentication.models';
 import { AuthenticationService } from 'src/app/modules/authentication/utilities/authentication.service';
 import { environment } from 'src/environments/environment';
+import {
+  AuthLoginResponse,
+  AuthUserDataResponse,
+} from '../utilities/authentication.interfaces';
 import * as actions from './authentication.actions';
 
 @Injectable()
@@ -23,7 +29,7 @@ export class AuthenticationEffects {
       ofType(actions.login),
       exhaustMap((action) =>
         this.http
-          .post<AuthResponse>(
+          .post<AuthLoginResponse>(
             `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseApiKey}`,
             {
               email: action.email,
@@ -34,8 +40,8 @@ export class AuthenticationEffects {
           .pipe(
             map((response) => {
               const user = new User(
-                response.email,
                 response.localId,
+                response.email,
                 response.idToken,
                 response.refreshToken,
                 this.authService.handleExpireDate(response.expiresIn),
@@ -52,6 +58,36 @@ export class AuthenticationEffects {
                   error: this.authService.handleAuthError(errorResponse),
                 })
               )
+            )
+          )
+      )
+    )
+  );
+
+  getUserData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.loadUserData),
+      exhaustMap((action) =>
+        this.http
+          .post<AuthUserDataResponse>(
+            `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${environment.firebaseApiKey}`,
+            {
+              idToken: action.token,
+            }
+          )
+          .pipe(
+            map((response) => {
+              const userData = new UserData(
+                response.users[0].displayName,
+                response.users[0].emailVerified,
+                response.users[0].photoUrl,
+                response.users[0].passwordUpdatedAt
+              );
+
+              return actions.loadUserDataSuccess({ userData: userData });
+            }),
+            catchError((response) =>
+              of(actions.loadUserDataError({ error: response }))
             )
           )
       )

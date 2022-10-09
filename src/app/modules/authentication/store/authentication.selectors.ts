@@ -9,17 +9,37 @@ export const selectAuthenticationState = createSelector(
   (state) => state
 );
 
-export const getLoggingInState = createSelector(
+export const getIsLoggingIn = createSelector(
   selectAuthenticationState,
-  (state) => state.loggingIn
+  (state) => state.loading
 );
 
-export const getUserLoggedInState = createSelector(
+export const getUserLoggedIn = createSelector(
   selectAuthenticationState,
   (state) => state.userLoggedIn
 );
 
 export const getLoginError = createSelector(
   selectAuthenticationState,
-  (state) => state.loginError
+  (state) => state.error
+);
+
+export const selectUserDataState = createSelector(
+  selectAuthenticationState,
+  (state) => state.userData
+);
+
+export const getUserDataLoading = createSelector(
+  selectUserDataState,
+  (state) => state.loading
+);
+
+export const getUserData = createSelector(
+  selectUserDataState,
+  (state) => state.userData
+);
+
+export const getUserDataError = createSelector(
+  selectUserDataState,
+  (state) => state.error
 );

@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { filter, Observable, Subscription } from 'rxjs';
 import { ControlType } from 'src/app/utilities/app.enums';
 import { AppService } from 'src/app/utilities/app.service';
 import { AuthenticationService } from '../../utilities/authentication.service';
@@ -15,7 +16,9 @@ import { AuthenticationService } from '../../utilities/authentication.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+  private isLoggedInSub: Subscription;
+
   public form: FormGroup;
   public controlType = ControlType;
   public isLoggingIn$: Observable<boolean>;
@@ -33,6 +36,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
+    private router: Router,
     public appService: AppService
   ) {}
 
@@ -48,6 +52,13 @@ export class LoginComponent implements OnInit {
 
     this.isLoggingIn$ = this.authService.getIsLoggingIn();
     this.loginError$ = this.authService.getLoginError();
+
+    this.isLoggedInSub = this.authService
+      .isLoggedIn()
+      .pipe(filter((loggedIn) => loggedIn))
+      .subscribe(() => {
+        this.router.navigate(['/workspaces']);
+      });
   }
 
   public onSubmit(): void {
@@ -60,5 +71,11 @@ export class LoginComponent implements OnInit {
       this.password.value,
       this.rememberMe.value
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.isLoggedInSub) {
+      this.isLoggedInSub.unsubscribe();
+    }
   }
 }

@@ -1,16 +1,27 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, filter, map, Observable, take, throwError } from 'rxjs';
+import {
+  catchError,
+  combineLatestWith,
+  filter,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+  throwError,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationFacade } from '../store/authentication.facade';
 import { AuthError } from './authentication.enums';
 import {
-  AuthResponse,
-  RefreshTokenResponse,
-  UserInterface,
+  AuthRefreshTokenResponse,
+  AuthRegisterResponse,
+  AuthUpdateUserDataResponse,
+  AuthUser,
 } from './authentication.interfaces';
-import { User } from './authentication.models';
+import { User, UserData } from './authentication.models';
 
 @Injectable({
   providedIn: 'root',
@@ -37,9 +48,13 @@ export class AuthenticationService {
     return expirationDate;
   }
 
-  public register(email: string, password: string): Observable<AuthResponse> {
+  public register(
+    email: string,
+    displayName: string,
+    password: string
+  ): Observable<AuthRegisterResponse> {
     return this.http
-      .post<AuthResponse>(
+      .post<AuthRegisterResponse>(
         `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseApiKey}`,
         {
           email: email,
@@ -48,6 +63,19 @@ export class AuthenticationService {
         }
       )
       .pipe(
+        switchMap((response) =>
+          of(response).pipe(
+            combineLatestWith(
+              this.updateUserData(response.idToken, new UserData(displayName))
+            )
+          )
+        ),
+        map(([user, userData]) => {
+          return <AuthRegisterResponse>{
+            ...user,
+            userData: userData,
+          };
+        }),
         catchError((errorRes: HttpErrorResponse) =>
           throwError(() => this.handleAuthError(errorRes))
         )
@@ -59,8 +87,8 @@ export class AuthenticationService {
   }
 
   public loginSuccess(
-    email: string,
     id: string,
+    email: string,
     token: string,
     refreshToken: string,
     tokenExpiration: string,
@@ -68,8 +96,8 @@ export class AuthenticationService {
   ): void {
     this.authFacade.loginSuccess(
       new User(
-        email,
         id,
+        email,
         token,
         refreshToken,
         this.handleExpireDate(tokenExpiration),
@@ -78,8 +106,10 @@ export class AuthenticationService {
     );
   }
 
-  private refreshToken(refreshToken: string): Observable<RefreshTokenResponse> {
-    return this.http.post<RefreshTokenResponse>(
+  private refreshToken(
+    refreshToken: string
+  ): Observable<AuthRefreshTokenResponse> {
+    return this.http.post<AuthRefreshTokenResponse>(
       `https://securetoken.googleapis.com/v1/token?key=${environment.firebaseApiKey}`,
       {
         grant_type: 'refresh_token',
@@ -89,9 +119,7 @@ export class AuthenticationService {
   }
 
   public autoLogin(): void {
-    const userData: UserInterface = JSON.parse(
-      localStorage.getItem('userData')
-    );
+    const userData: AuthUser = JSON.parse(localStorage.getItem('userData'));
 
     if (!userData) {
       return;
@@ -129,6 +157,39 @@ export class AuthenticationService {
     }
   }
 
+  public getUserData(token: string): Observable<UserData> {
+    return this.authFacade.getUserData(token);
+  }
+
+  public updateUserData(
+    token: string,
+    userData: UserData
+  ): Observable<UserData> {
+    return this.http
+      .post<AuthUpdateUserDataResponse>(
+        `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${environment.firebaseApiKey}`,
+        {
+          idToken: token,
+          displayName: userData.displayName,
+          returnSecureToken: false,
+        }
+      )
+      .pipe(
+        map((response) => {
+          const newUserData = new UserData(
+            response.displayName,
+            userData.emailVerified,
+            response.photoUrl,
+            userData.passwordUpdatedAt
+          );
+
+          this.authFacade.updateUserData(newUserData);
+
+          return newUserData;
+        })
+      );
+  }
+
   public logout(): void {
     this.authFacade.logout();
     this.getUserLoggedIn()
@@ -152,6 +213,27 @@ export class AuthenticationService {
 
   public isLoggedIn(): Observable<boolean> {
     return this.getUserLoggedIn().pipe(map((user) => !!user && !!user.token));
+    // return this.getUserLoggedIn().pipe(
+    //   switchMap((user) => {
+    //     if (!!user && !!user.token) {
+    //       return of(true);
+    //     }
+    //     console.log('user', user);
+
+    //     this.autoLogin();
+    //     return this.authFacade.getAuthState().pipe(
+    //       distinctUntilChanged(),
+    //       map((state) => {
+    //         console.log('Auth state:', state);
+    //         if (!!state.userLoggedIn && !!state.userLoggedIn.token) {
+    //           return true;
+    //         }
+
+    //         return false;
+    //       })
+    //     );
+    //   })
+    // );
   }
 
   public getLoginError(): Observable<string> {

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/authentication/pages/login/login.component';
 import { RegisterComponent } from './modules/authentication/pages/register/register.component';
-import { AuthenticateGuard } from './modules/authentication/utilities/authenticate.guard';
+import { AuthenticateGuard } from './modules/authentication/utilities/authentication.guard';
 import { BoardComponent } from './modules/board/pages/board/board.component';
 import { HomeComponent } from './modules/home/pages/home.component';
 import { WorkspaceComponent } from './modules/workspace/pages/workspace/workspace.component';

@@ -39,7 +39,7 @@ export class BoardService {
     );
   }
 
-  public getBoardsInWorkspace(workspaceId: string) {
+  public getBoardsInWorkspace(workspaceId: string): Observable<Board[]> {
     return this.getBoards().pipe(
       map((boards) =>
         boards.filter((board) => board.workspaceId === workspaceId)
