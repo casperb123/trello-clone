@@ -13,3 +13,18 @@ export enum ControlType {
   ColorGreen = 'green color',
   ColorBlue = 'blue color',
 }
+
+export enum ApiEndpoint {
+  AuthRegister = '/accounts:signUp',
+  AuthLogin = '/accounts:signInWithPassword',
+  AuthRefreshToken = '/token',
+  AuthGetUserData = '/accounts:lookup',
+  AuthUpdateUserData = '/accounts:update',
+  Workspaces = '/workspaces.json',
+  Boards = '/boards.json',
+}
+
+export enum ApiType {
+  Auth,
+  Database,
+}

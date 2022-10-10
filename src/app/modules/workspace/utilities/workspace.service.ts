@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exhaustMap, filter, map, Observable } from 'rxjs';
+import { ApiEndpoint, ApiType } from 'src/app/utilities/app.enums';
+import { Api } from 'src/app/utilities/app.service';
 import { AuthenticationService } from '../../authentication/utilities/authentication.service';
 import { WorkspaceFacade } from '../store/workspace.facade';
 import { CreateWorkspaceResponse } from './workspace.interfaces';
@@ -13,7 +15,8 @@ export class WorkspaceService {
   constructor(
     private workspaceFacade: WorkspaceFacade,
     private authService: AuthenticationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private api: Api
   ) {}
 
   public getIsLoading(): Observable<boolean> {
@@ -50,7 +53,11 @@ export class WorkspaceService {
       exhaustMap((user) =>
         this.http
           .post<CreateWorkspaceResponse>(
-            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/workspaces.json`,
+            this.api.getApiUrl(
+              ApiType.Database,
+              ApiEndpoint.Workspaces,
+              user.id
+            ),
             {
               title: title,
               description: description,

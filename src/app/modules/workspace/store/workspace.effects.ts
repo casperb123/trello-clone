@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
+import { ApiEndpoint, ApiType } from 'src/app/utilities/app.enums';
+import { Api } from 'src/app/utilities/app.service';
 import { AuthenticationService } from '../../authentication/utilities/authentication.service';
-import { BoardService } from '../../board/utilities/board.service';
 import { Workspace } from '../utilities/workspace.models';
 import * as actions from './workspace.actions';
 
@@ -13,7 +14,7 @@ export class WorkspaceEffects {
     private actions$: Actions,
     private http: HttpClient,
     private authService: AuthenticationService,
-    private boardService: BoardService
+    private api: Api
   ) {}
 
   loadWorkspaces$ = createEffect(() =>
@@ -29,7 +30,11 @@ export class WorkspaceEffects {
 
         return this.http
           .get(
-            `https://trello-clone-b2507-default-rtdb.europe-west1.firebasedatabase.app/${user.id}/workspaces.json`
+            this.api.getApiUrl(
+              ApiType.Database,
+              ApiEndpoint.Workspaces,
+              user.id
+            )
           )
           .pipe(
             map((response) => {

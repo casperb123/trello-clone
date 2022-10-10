@@ -12,7 +12,8 @@ import {
   take,
   throwError,
 } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { ApiEndpoint, ApiType } from 'src/app/utilities/app.enums';
+import { Api } from 'src/app/utilities/app.service';
 import { AuthenticationFacade } from '../store/authentication.facade';
 import { AuthError } from './authentication.enums';
 import {
@@ -30,7 +31,8 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private authFacade: AuthenticationFacade,
-    private router: Router
+    private router: Router,
+    private api: Api
   ) {}
 
   public handleAuthError(error: HttpErrorResponse): string {
@@ -55,7 +57,7 @@ export class AuthenticationService {
   ): Observable<AuthRegisterResponse> {
     return this.http
       .post<AuthRegisterResponse>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseApiKey}`,
+        this.api.getApiUrl(ApiType.Auth, ApiEndpoint.AuthRegister),
         {
           email: email,
           password: password,
@@ -110,7 +112,7 @@ export class AuthenticationService {
     refreshToken: string
   ): Observable<AuthRefreshTokenResponse> {
     return this.http.post<AuthRefreshTokenResponse>(
-      `https://securetoken.googleapis.com/v1/token?key=${environment.firebaseApiKey}`,
+      this.api.getApiUrl(ApiType.Auth, ApiEndpoint.AuthRefreshToken),
       {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
@@ -167,7 +169,7 @@ export class AuthenticationService {
   ): Observable<UserData> {
     return this.http
       .post<AuthUpdateUserDataResponse>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${environment.firebaseApiKey}`,
+        this.api.getApiUrl(ApiType.Auth, ApiEndpoint.AuthUpdateUserData),
         {
           idToken: token,
           displayName: userData.displayName,

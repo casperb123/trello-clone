@@ -2,9 +2,10 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 import { CreateBoardDialogComponent } from '../modules/board/components/create-board-dialog/create-board-dialog.component';
 import { CreateWorkspaceComponent } from '../modules/workspace/components/create-workspace/create-workspace.component';
-import { ControlType, DialogType } from './app.enums';
+import { ApiEndpoint, ApiType, ControlType, DialogType } from './app.enums';
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
@@ -48,5 +49,21 @@ export class AppService {
     }
 
     return '';
+  }
+}
+
+@Injectable({ providedIn: 'root' })
+export class Api {
+  public getApiUrl(
+    apiType: ApiType,
+    apiEndpoint: ApiEndpoint,
+    userId?: string
+  ): string {
+    switch (apiType) {
+      case ApiType.Auth:
+        return `${environment.baseAuthUrl}${apiEndpoint}?key=${environment.firebaseApiKey}`;
+      case ApiType.Database:
+        return `${environment.baseDataBaseUrl}/${userId}${apiEndpoint}`;
+    }
   }
 }

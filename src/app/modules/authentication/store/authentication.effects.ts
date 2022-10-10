@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 import {
@@ -8,7 +7,8 @@ import {
   UserData,
 } from 'src/app/modules/authentication/utilities/authentication.models';
 import { AuthenticationService } from 'src/app/modules/authentication/utilities/authentication.service';
-import { environment } from 'src/environments/environment';
+import { ApiEndpoint, ApiType } from 'src/app/utilities/app.enums';
+import { Api } from 'src/app/utilities/app.service';
 import {
   AuthLoginResponse,
   AuthUserDataResponse,
@@ -21,7 +21,7 @@ export class AuthenticationEffects {
     private actions$: Actions,
     private http: HttpClient,
     private authService: AuthenticationService,
-    private router: Router
+    private api: Api
   ) {}
 
   login$ = createEffect(() =>
@@ -30,7 +30,7 @@ export class AuthenticationEffects {
       exhaustMap((action) =>
         this.http
           .post<AuthLoginResponse>(
-            `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseApiKey}`,
+            this.api.getApiUrl(ApiType.Auth, ApiEndpoint.AuthLogin),
             {
               email: action.email,
               password: action.password,
@@ -70,7 +70,7 @@ export class AuthenticationEffects {
       exhaustMap((action) =>
         this.http
           .post<AuthUserDataResponse>(
-            `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${environment.firebaseApiKey}`,
+            this.api.getApiUrl(ApiType.Auth, ApiEndpoint.AuthGetUserData),
             {
               idToken: action.token,
             }
